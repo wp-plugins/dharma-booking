@@ -1,0 +1,124 @@
+/*colors and fonts*/
+#booking-calendar h3.errors { font-size:110%; color:red; }
+#booking-calendar h1.errors {text-align: center;background-color: black;color: red;padding: 5px;border-radius: 7px;}
+#booking-calendar h1.error{ color:red; background-color:black;padding:8px;}
+#booking-calendar small#timer {border: 1px solid rgb(16, 0, 136);padding: 5px;background: #C7FFC7;border-style: dotted;border-radius: 5px;}
+#booking-calendar .displaybox {	background: white;	border: 3px solid black}
+#booking-calendar .rentalSelectors.fullrental{background-color:gray; }
+#booking-calendar .selected{background-color:rgb(204, 255, 255); }
+#booking-calendar #booking-plugin-blackout {	background-color: rgba(22, 22, 131, 0.64);	}
+#booking-calendar #popoutCalendar {border: 1px solid grey;background-color: white;background: white;}
+#booking-calendar #errorList li {color:#CF0D0D;font-size:120%;font-weight: bold;border-radius: 5px;}
+#booking-calendar .errorField { background-color: #FF9F9F;border: 3px solid red;}
+#booking-calendar button { font-size:121%;  padding:15px;}
+#booking-calendar #sms-warningbox {background: #FCF1DD;border-radius: 3px;}
+#booking-calendar.fail {	color:OrangeRed; }
+#booking-calendar.success {color:green;}
+
+#rentalCalendar .active-day { color:black;}
+#rentalCalendar .inactive-day { color:gray;}
+#rentalCalendar td { border-color:gray;}
+#rentalCalendar tr.nohover:hover{ background-color:transparent}
+#booking-calendar .rentalSelector,#booking-calendar #reviewTitle ,#rentalCalendar .avaliable,#rentalCalendar tr:hover {background-color:rgb(162, 224, 58); color:black;}
+#rentalCalendar .full {background-color:rgb(87, 139, 3); color:gray;}
+#rentalCalendar .disabled {color:lightgray; background-color:rgb(176, 230, 89);}
+
+#feedback ul {padding: 0;display:inline}
+#feedback ul li{font-size:110%;list-style: none;display: inline;border-right: 1px solid black;padding: 5px;}
+#feedback ul li:first-child{border-left: 1px solid black;}
+#feedback ul li.fail{color:red; }
+#feedback ul li.success{color:green;}
+
+.debugclass {width:100%;border-bottom:1px solid; gray}
+
+#non-avaliable {background-color: rgb(250, 179, 114);font-weight: bold;}
+
+/* 
+structrue
+*/
+
+#booking-plugin-blackout {	width:100%; z-index:8; height:1000px; position:fixed; left:0px; top:0px;display: none; }
+.displaybox {z-index: 400;border-radius: 3px;font-size: 125%;position:absolute;bottom: 20px;width:530px;margin-left:-260px;left:50%;} 
+#calenderDiv,#calendarForm  table {width:100%;}
+#calenderContainerDiv #popoutCalendar {position: absolute; }
+#calenderContainerDiv ,#reviewDiv { position:relative;}
+#calenderContainerDiv #popoutCalendar {z-index:99;border-radius:5px;padding: 4px;}
+#bookform-phone {border-radius: 5px 5px 5px 5px; }
+#ui-datepicker-div { display:none;} 
+#reviewDiv table{  border-collapse: collapse; margin:18px 0px;}
+#reviewTable th {	font-size:110%;}
+#reviewTable td,#reviewTable th{ 	border-bottom:1px solid gray;text-align: right;} 
+th#reviewTitle{padding:1px 7px 1px;text-align:right;}
+#reviewTitle {text-align:left;}
+#errorList, #errorList li { margin: 0; padding: 0; list-style-type: none; }
+#errorList {padding:6px;	}
+#errorList li {display:inline-block;padding:7px;margin-top:3px;margin-left:3px;}
+#formFields {border-radius:5px;padding:4px; overflow:hidden; float:right;}
+#formFields label { font-weight:bold;font-size:110%;float: left;text-transform: capitalize;}
+#formFields select { width:366px;		float: right;}
+#formFields input {float: right;width:360px;}
+#formFields input[type=checkbox] {    width: 20px;    }
+#formFields .forminput {    padding: 4px 3px 0px 3px;}
+#formFields textarea { float:right; height:70px !important; width:360px;}
+#rentalCalendar {	border:0px;}
+#rentalCalendar td {border:0px 1px 1px 1px;padding:2px 4px;text-align:center;height:15px;}
+#rentalCalendar th.rentalRow { 	text-align:left;	width:141px;} 
+#rentalCalendar td.calendarRow {width:15px;}
+#rentalCalendar select {float: left;width: 90px;}
+#calendarForm #pricesText,#calendarForm #continue-button { float: right;}
+#calendarForm #finalCalendarButton{float: right;margin: 5px 1px 1px 0px; width: 225px;}
+#calendarForm #startDate { width:125px;}
+#calendarForm #callender-button-div {clear:both;}
+#calendarForm #sms-warningbox {clear: both;border: 1px solid;margin: 4px;	padding: 4px;}
+.forminput input ,.forminput select {font-size: 86%;float: none;margin: 5px;}
+
+/*
+-------------------------------------------------------------------------------------------
+loadmask jquery styles 
+-------------------------------------------------------------------------------------------
+*/
+.loadmask { background-color: #CDE;}
+.loadmask-msg div {background: #fbfbfb url('img/loading.gif') no-repeat 5px center ;}
+#page .loadmask-msg, #calendarForm .loadmask-msg {border:1px solid #98ACDF;background: #98ACDF;padding:3px;border-radius:4px;}
+
+.loadmask-msg div {border-radius: 5px 5px 5px 5px;font-weight: bold;font-size:120%;}
+#calenderContainerDiv .loadmask-msg div {border:1px solid #DEDBB1;color: #660;}
+#formFields .loadmask-msg div {font-size:250%;color: #660;}
+
+#formFields .loadmask-msg {background: rgb(49, 255, 21);border: 2px;border-style: solid;border-color: black;border-left: 0px;border-radius: 0px 13px 13px 0px;}	
+#formFields .loadmask {background-color: rgb(87, 224, 53);}
+
+.loadmask { z-index: 30;position:absolute;top:0;left:0;-moz-opacity:0.5;opacity:0.50;filter:alpha(opacity=50);width: 100%;height: 100%;}
+.loadmask-msg { z-index: 32; position:absolute;top:0;left: 0;}
+.loadmask-msg div {line-height:16px;padding: 25px;}
+.masked-relative {    position: relative !important;}
+.masked-hidden {    visibility: hidden !important;}
+#calenderContainerDiv .loadmask-msg div ,#calenderContainerDiv .masked {cursor:wait;}
+#formFields .loadmask-msg {  top: 20% !important;left:0% !important;}
+#formFields .loadmask-msg div{ padding: 13px;}
+
+/* 
+-------------------------------------------------------------------------------------------
+gateway stuff below
+-------------------------------------------------------------------------------------------
+*/
+.paymentgateway button h2 {margin: 0px;font-size: 128%;}
+.paymentgateway button {padding: 6px;margin:7px 2px 18px 7px;}
+
+#gateway-div small {float: right;font-size: 60%;}
+#gateway-div ul#final-details-overview {list-style:none; padding: 0px;}
+#gateway-div ul#final-details-overview li:first-child  {font-weight:bold;text-transform: capitalize;font-size: 119%;letter-spacing: 2px;}
+#gateway-div  #reviewTable {float: right;width: 100%;}
+#gateway-div form { float:right;}
+#gateway-inner { padding:18px; } 
+
+
+/*
+-------------------------------------------------------------------------------------------
+odds and ends
+-------------------------------------------------------------------------------------------
+*/
+
+.floatright{float:right;}
+.floatleft{float:left;}
+.hidden {display:none}

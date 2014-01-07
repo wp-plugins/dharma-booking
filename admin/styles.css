@@ -1,0 +1,253 @@
+/* woah talk about a mess of a file */
+
+a { text-decoration: none;  }
+button {cursor: pointer;}
+h1.longdate { text-align: left;width: 100%;border-bottom: 1px dashed green;padding: 11px; }
+h3.big { text-align:center; font-size:130%;padding: 0px; } 
+input[type=number] { height:23px;width:52px;font-size: 115%;}
+h1 button, h1 input[type=button],h1 input[type=submit]{	padding: 19px;border-radius: 5px;margin-right: 31px;	}
+h2 button, h2 input[type=button],h2 input[type=submit]{	padding: 19px;	border-radius: 5px;font-weight: bold;	}
+h3 button, h3 input[type=button],h3 input[type=submit]{	padding: 9px;	border-radius: 3px;	}
+h4 button, h4 input[type=button],h4 input[type=submit]{	padding: 9px 3px;	border-radius: 3px;	}
+h1 {text-transform: capitalize;}
+
+
+.dashboardbuttons button  {position:relative;}
+.dashboardbuttons button small {font-size:60%;position:absolute; left:3px; bottom:3px;}
+
+
+/* this file need sorting out */
+
+#rentalcheckinbox{font-size:120%;}
+#rentalcheckinbox .detailsButton{float:right;}
+#rentalcheckinbox .checkedin{background-color:rgb(232, 255, 197);}
+#checkinLimit {border: 4px solid #CACACA;border-radius: 9px;text-align: center;}
+
+#control li,#reports-menu li, input[type=submit], input[type=button] , button {
+	border: 2px solid #8A8A8A;
+	background-color: #F3EFD1;
+	color: #333;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	margin: 2px;
+	padding: 4px;
+	outline: 0;
+	line-height: 15px;
+	font-size: 131%;
+}
+
+
+div label { float: left; font-size:120%;min-width:100px}
+div#control label{float:none;}
+#addItemForm label { float: left; font-size:120%;min-width:90px}
+#addItemForm input {}
+
+.shortcodetitle {font-size:50%;background-color:#E5F3E5;padding:4px;border-radius:24px;border: 1px solid #C28F0B;}
+.sortcodes { border: 1px solid gray;padding: 9px;margin: 3px;text-transform: lowercase;border-radius: 3px;line-height: 20px;}
+
+#reports-menu li {
+	font-size:200%;
+	border: 1px solid;
+	margin: 5px;	
+	border-radius: 7px 7px 0px 0px;
+	text-transform: capitalize;
+	display:inline; 
+}
+#reports-menu a {padding: 4px;}
+#reports-menu li:hover{background-color:lightblue;}
+#control li.current, #reports-menu li.current {background-color:lightblue; color:red; border:1px solid gray;}
+#reports-menu {margin: 21px 0px 22px; border-bottom: 1px solid black;padding-bottom: 6px;}
+#startDate, #endDate{width:80px;}
+
+
+
+.width50 { width:50%}
+.floatleft{float:left;}
+.alignleft{float:left;}
+.alignright{float:right;}
+.hidden {display:none;}
+.floatright{float:right;}
+
+span.white  {	padding: 4px;font-size: 110%;}
+span.green  {background-color: #A3F358;	padding: 4px;font-size: 110%;font-style: italic;font-weight: bolder;}
+input.green {background-color:#A3F358floatleft}
+span.red {background-color:#FFB174;	padding: 4px;font-size: 110%;font-style: italic;font-weight: bolder}
+input.red {background-color:#FFB174;}
+
+#templateForm label {font-size:160%;display:block;border-bottom:2px solid #E4D7D7; margin:4px;text-transform: capitalize;}
+#templateForm label {float:none;}
+
+.rentalDetails {width: 148px;text-align: center;}
+.rentalDetails ul li {display:inline-block;font-size:90%;text-decoration: none;}
+.checkedin .rentalDetails ul li {display:block;font-size: 90%;}
+.rentalDetails ul {text-align:left; margin:0px;padding:0px;}
+.rentalDetails .details u {background: #FAFAFA;padding: 3px;border-radius: 3px;}
+.groupingBox .rentalitems li {display:block}
+.groupingBox .rentalitems {padding:0;clear:both;}
+
+#feedback {text-align: center;width: 100%;opacity: 0.7;font-size:32px;z-index:7;}
+#feedback ul { margin:0px;padding:4px;border-style: solid;border-radius: 3px;}
+#feedback li {display: inline-block;
+	padding:4px;
+	border-style: solid;
+	z-index:7;
+background-color: black;
+margin: 2px;
+border-radius: 3px;
+}
+#feedback li:first-child { border-left-width: 5px;}
+
+
+/* old styles */
+
+
+/*
+------------------------------------------------------
+black out and popoput box stuss
+------------------------------------------------------
+*/
+#blackout{
+	width:100%; 
+	background: black;
+	left:0px;	
+	position:fixed;
+	top:0px;
+	width:100%; 
+	height:100%;
+	z-index:80;
+	display:none;
+	-moz-opacity: 0.60;
+	opacity: 0.6;
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=64)";
+}
+#blackout h1 { position: absolute;top:28%;left: 28%;font-size: 900%;font-weight: bolder; color:red;}
+
+.popupup-box, .popup-box{
+	position: fixed;
+	display:none;
+	background-color: white;
+	border-radius: 5px;
+	-moz-opacity: 1.0;
+	opacity: 1.0;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+	z-index: 200;
+	padding: 29px;
+	top: 13%;
+	left:3%;
+	border: 4px solid black;
+	font-size: 105%;
+}
+
+.popupup-box textarea,.popupup-box input { border: 1px solid gray;border-radius: 3px;padding: 2px;margin: 2px;width:156px;}
+.popupup-box #availab td{border: 1px solid #B3ACAC; text-align: center;}
+.popupup-box #availab th{border: 0px solid #B3ACAC; text-align: left;}
+.popupup-box #availab th.date{border: 1px solid #B3ACAC; text-align: center;}
+.popupup-box #availab {font-size:130%; }
+.popupup-box .xButton {position: absolute;top: -17px;border-color: black;border-width: 3px;right: -15px;border-radius: 90px; z-index:20;}
+.popupup-box  .floatleft {margin-right: 23px;}
+.popupup-box #chart1 {min-width:700px;}
+.popupup-box #dayDetailsBox {right: -271px;position: relative;float: right;left: auto;}
+.popupup-box form#bookingDetailsForm {min-width:600px;}
+
+#blankbox { z-index:201;}
+#blankbox.popupup-box textarea{width: 365px;height: 62px;}
+#blankbox .detailsBoxFormGroup1 { padding: 7px;background-color: rgb(200, 212, 226);border-radius: 5px;}
+#blankbox .detailsBoxFormGroup2 { padding:4px; background-color:white}
+#blankbox h1 input { font-size:130%;}
+#blankbox h1 {margin:0px;}
+#blankbox h3 small {text-align:center;  } 
+#blankbox small.deleteButton {position: relative;top: 51px;} 
+
+
+#dialogBox textarea, #dialogBox input { border:1px solid black;   } 
+#dialogBox label { } 
+
+/*
+belowe here is other stuffs
+*/
+.fail {black;color:OrangeRed; }
+.success {color:rgb(10, 206, 10);;}
+.warning {color:OrangeRed;}
+h3.late { background-color: #664D28;border-radius: 2px;margin: 4px;padding: 4px;color: #FFF500;text-align:center;}
+.lastnight{width: 54px;float: right;background-color: #5A2323;color: #9999DB;border-radius: 2px;}
+
+
+
+/* rental page */
+.savedRental { background-color:lightgreen; } 
+
+.simple-table td { border-bottom: 1px dashed gray;}
+
+/* importn but i know not what for */
+table.spsheet { border-collapse: collapse; }
+table.spsheet th { border: 1px solid gray; padding: 1px; }
+table. td { border-bottom: 1px dashed gray;}
+table.spsheet tbody tr:hover { background-color:#F1E7B1;; }
+ul#pagation li { display:inline;margin:2px;}
+a.currentOrder, .currentPage a{ color:red;}
+#control  { width:100%; border-width: 0px 0px 1px 0px;padding: 0px 0px 10px;border-style: solid;}
+#control  input { display:inline}
+#ordering  { float:left; }
+#searches {float:right; }
+.spsheet td{    vertical-align: top;}
+
+.rentalRow tr:hover { background-color:#E6EE90; }
+.rentalRow input[type=text] { width: 30px; }
+.rentalRow input[name=name] { width: 190px; }
+.rentalRow input[name=price],.rentalRow input[name=discount] { width: 50px; }
+
+.rentalRow input[name=discription] { width: 350px;height:350px }
+.rentalRow #editRoomForm { display: none; }
+.groupingBox {	border:1px solid green; 	padding:5px; 	border-radius:3px;	margin:3px; font-size:106%;overflow: hidden; background-color:white;}
+.groupingBox h1 {margin: 3px 0px 9px;text-align: left;font-size:25px;line-height: 23px; height: 21px;}
+.groupingBox h2 {min-height: 33px;margin: 3px 0px 9px;text-align: left;}
+.groupingBox p {max-width: 150px;text-indent: 0px;font-size: 17px;font-style: italic;}
+
+
+input.edited { background-color: #F7F78B; border: 1px solid #EEA0A0; font-weight: bold; }
+
+/*calender page stuffs*/
+
+#bookings { float: left; margin-right: 10px; }
+caption { font-weight: bold; }
+input.noavail,td.noavail { background-color: lightgreen; }
+input.negavail, td.negavail { background-color: LightCoral; }
+input.beds { width: 22px; text-align: center;}
+.title {  font-size: 185%;    padding: 20px; }
+
+/* from guest admin page */
+#bookingReportTable ul li ,#bookingReportTable ul { margin:0px}
+#bookingReportTable th { border-bottom:1px solid black;}
+#bookingReportTable td:hover{background-color:#D3F3D3;}
+.smallBox { 
+	border:1px solid purple ;
+	padding: 5px;
+	border-radius: 6px;
+	margin: 2px; 
+	background-color:white;
+	width:260px;
+	position:relative;
+}
+#bookingReportTable .smallBox .innerbox {text-align:left; width:140px;}
+#bookingReportTable .smallBox .checkedin {position: absolute;bottom: 7px;right: 72px;}
+#bookingReportTable .smallBox button {position: absolute;bottom: 3px;right: 3px;}
+
+#paymenthistorybox .closehistory{	position: absolute;right: 4px;}
+#paymenthistorybox{
+	height:97%;
+	overflow:scroll;
+	position: absolute;
+	left: 2px;
+	top: 9px;
+	width: 99%;
+	background-color: whiteSmoke;
+}
+.rentalschartTable th .pointinfo{font-weight: normal;display:none;background-color: #E1E1FC;padding: 4px;border-radius: 3px;}
+.rentalschartTable th {width: 120px;text-align: left;vertical-align: top;}
+/*
+
+*/
+.ui-datepicker { display:none;}
+
+.ocupancity-chart {height:500px;width:700px; }
+#wpbody-content .ocupancity-chart {height:600px;width:100%; }
