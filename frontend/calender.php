@@ -2,6 +2,7 @@
 require_once('functions.php');
 class matrixCalender {
 	function matrixCalender () {
+		global $wpdb;
 		
 		//get back end settings 
 		$this->settings = get_option('Dharma_Vars');
@@ -12,12 +13,13 @@ class matrixCalender {
 		
 		//put arrays in place 
 		$this->vars = getStrings();
-		$this->roomtypes = getRentalFullDetails();
-		
+		$sql = 'SELECT id, name, minimum, capacity, price,discount, discription FROM '.$wpdb->prefix.DATABASE_PREFIX.'roomtypes  WHERE active = 1 ORDER by menuorder';
+		$this->rentals = $wpdb->get_results($sql);
+
 		$this->url = PLUGIN_ROOT_URL;
 		
-      //setup important values for sure
-      $this->noNights = 	$this->settings['CnoNite'];
+		//setup important values for sure
+		$this->noNights = 	$this->settings['CnoNite'];
 		$this->weekStart = date('Y-m-d', time() + (86400 * $this->settings['cDaysAhead'])); 
 		if(!empty($_GET['noNights'])){
 			$this->noNights = 	$_GET['noNights'];
@@ -41,16 +43,13 @@ class matrixCalender {
 		includeFrontendCSS();
 		$this->cssOvers;
       
-      if($this->settings['bookingState'] == 'testing') echo $this->settings['TestingText'];
+		if($this->settings['bookingState'] == 'testing') echo $this->settings['TestingText'];
 		?>
-      <script type="text/javascript">var discountCard = '<?=$this->settings['discountCard']?>';</script>		
-      <div id="booking-calendar">
+    <script type="text/javascript">var discountCard = '<?=$this->settings['discountCard']?>';</script>		
+    <div id="booking-calendar">
 		<div id="booking-plugin-blackout" ></div>
 		<noscript><h1 class="errors"><?=__('This page requires javascript to use.',PLUGIN_TRANS_NAMESPACE)?></h1></noscript>
 		
-		<?php if($this->settings['updateTimeoutOn'] == 'yes') : ?>
-		<small class="floatright" id="timer"><?=sprintf(__('Updating in %s seconds.',PLUGIN_TRANS_NAMESPACE),'<b id="time"></b>');?></small	>
-		<?php endif ?>
 		<form id="calendarForm" method="POST" action="<?=get_permalink($this->thanksPage);?>" >
 			<input type="hidden" id="nicelyFormatedDate" value="<?=date('jS \of F Y',$this->startStamp)?>" />
 			<div id="dateInput">
@@ -67,30 +66,21 @@ class matrixCalender {
 			</div>
 			
 			<div id="calenderContainerDiv">
-            <?php if($this->settings['showpopout']): ?>
-				<div id="popoutCalendar" class="hidden" style="<?=$this->settings['calenderpopoutcss']?>" >
-					<? foreach ($this->roomtypes as $id => $room) : ?>
-						<div id="<?php echo $id ?>-Info" class="hidden rentalinfobox">
-							<?=stripslashes( $room['discription'])?>
-						</div>
-					<? endforeach ?>
-				</div>
-            <?php endif ?>
 				<div id="calenderDiv"><?php $this->showCalendarMatrix();?></div>
 				<button type="button" id="continue-button" class="floatright hidden"><?php _e('Continue',PLUGIN_TRANS_NAMESPACE);?></button>
 			</div>	
 			
+
 			<div id="formFields" class="hidden">
 				<?php echo makeInputs(userInfoDetails()); ?>
 				<div class="clear"></div>
 				<div id="callender-button-div">
-					<button id="finalCalendarButton" type="button" >
-						<big><?php _e('Book Now',PLUGIN_TRANS_NAMESPACE);?></big><br />
-						<small>
-							<?php _e('Complete required(*) fields',PLUGIN_TRANS_NAMESPACE);?>
-						</small>
-					</button>
-               <div id="errorDiv" class="hidden"><strong><?=__('Please enter',PLUGIN_TRANS_NAMESPACE)?></strong><ul id="errorList"></ul></div>
+					<div class="floatright">
+						<button id="finalCalendarButton" type="button" > <big><?php _e('Book Now',PLUGIN_TRANS_NAMESPACE);?></big> </button>
+						<br />
+						<small class="hideme"> <?php _e('Complete required(*) fields to unlock.',PLUGIN_TRANS_NAMESPACE);?> </small>
+					</div>
+					<div id="errorDiv" class="hidden"><strong><?=__('Please enter',PLUGIN_TRANS_NAMESPACE)?></strong><ul id="errorList"></ul></div>
 					<div class="clear"></div>
 				</div>
 			</div>
@@ -103,27 +93,25 @@ class matrixCalender {
 				<input   type="submit" value="Book Now" id="makeBookingButton"/>
 			</form>
 		<?php else: ?>
-			<div id="gateway-div" class="hidden displaybox" ><div id="gateway-inner">
+			<div id="gateway-div" class="hidden displaybox " ><div id="gateway-inner">
 				<ul id="final-details-overview"></ul>
-				<div id="final-payment-overview"></div>sprintf
+				<div id="final-payment-overview"></div>
 				<small>
 					<?=sprintf(__('Prices are in %s &amp; per person per night',PLUGIN_TRANS_NAMESPACE),$this->settings['payment_currency_code']);?><br />
+					<?=sprintf(__('',PLUGIN_TRANS_NAMESPACE),$this->settings['payment_currency_code']);?><br />
 					<?php if($this->settings['discountCard'] != 'none'):?>
-						<?=sprintf(__('Discount prices available upon check in.',PLUGIN_TRANS_NAMESPACE),$this->settings['discountCard'],$this->settings['discountCard']);?>
+						<?php _e('Discount prices available upon check in.',PLUGIN_TRANS_NAMESPACE)?>
 					<?php endif ?>
 				</small>
 				<div class="clear"></div>
-				<?php  
-				include_once(PLUGIN_ROOT_PATH.'frontend/gateways/'.$this->gateway.'.php');
-				if($this->settings['takeFull']){
-					echo '<script type="text/javascript">var takeDeposit = false;</script>';
-               makePaymentForm($this->settings['paymentAccount'],$this->settings['payment_currency_code'],'full');
-            }
-            if($this->settings['takeDeposit']){
-					echo '<script type="text/javascript">var takeDeposit = '.$this->settings['payment_depoist'].'</script>';
-               makePaymentForm($this->settings['paymentAccount'],$this->settings['payment_currency_code'],'deposit',$this->settings['payment_depoist']);
-            }
-				?>
+				<?php  if($this->settings['takeFull']):?>
+					<script type="text/javascript">var takeDeposit = false;</script>
+					<button> <?php _e('Pay full amount',PLUGIN_TRANS_NAMESPACE)?> </button> 
+				<?php endif ?>
+				<?php if($this->settings['takeDeposit']): ?>
+					<button> <?php printf( __( 'Pay %d%% deposit', PLUGIN_TRANS_NAMESPACE) ,$this->settings['payment_depoist']);?> </button>
+					<script type="text/javascript">var takeDeposit = '.$this->settings['payment_depoist'].'</script>
+				<?php endif ?>
 			</div></div>
 		<?php endif ?>
 		</div>
@@ -138,6 +126,7 @@ class matrixCalender {
 	function showCalendarMatrix(){	
 		$this->firstAvailble = $this->endStamp;
 		?>
+		<div id="bottomOfCalendar"></div>
 		<table id="rentalCalendar" cellspacing="0" border="0">
 			<tr class="header nohover">
 				<td   colspan="<?=($this->settings['discountCard'] != 'none'?'3':'2')?>"></td>
@@ -146,35 +135,31 @@ class matrixCalender {
 				<?php  $n++; endfor; ?>
 			</tr>
 		<?php  
-		foreach ($this->roomtypes as $id => $room) : 
-			$details = $this->createRentalRow($room['minimum'],$id );
+		foreach ($this->rentals as $a) : 
+			$details = $this->createRentalRow($a->minimum,$a->id );
 		?>
-		<tr >
- 			<th id="<?=$id?>" class="rentalRow">
-				<span id="<?=$id?>-name"><?=$room['name']?></span> 
-            <?php if($this->settings['showpopout']): ?><img src="<?=$this->url ?>img/info.png" /><?php endif ?>
+		<tr title="<?=stripslashes( $a->discription)?>">
+ 			<th id="<?=$a->id?>" class="rentalRow">
+				<span id="<?=$a->id?>-name"><?=$a->name?></span> 
+            <?php if(isset($this->settings['showpopout'])): ?><img src="<?=$this->url ?>img/info.png" /><?php endif ?>
 			</th>		
-			<th>
-				<?=$room['price']?> 
-				<input type="hidden" value="<?=$room['price']?>" id="price_<?=$id?>" />
-			</th>
+			<th id="price_<?=$a->id?>" data-price="<?=$a->price?>"> <?php //$this->settings['CURRANCYSYMBOL'] ?>$<?=$a->price?>  </th>
 			<?php if($this->settings['discountCard'] != 'none'):?>
-				<th>
-					<?=$room['discount']?> 
-					<input type="hidden" value="<?=$room['discount']?>" id="discount_<?=$id?>" />
+				<th  id="discount_<?=$a->id?>" data-price="<?=$a->discount?>" >
+					<?php //$this->settings['CURRANCYSYMBOL'] ?>$<?=$a->discount?> 
 				</th>	
 			<?php endif?>
 			<?php echo $details[0]; ?>
 			
 			<td><?=$details[1];?></td>
 			</tr>
-			<? endforeach ?>
+			<?php endforeach ?>
 			<?php if($this->settings['discountCard'] != 'none'):?>
 				<tr class="nohover">
 					<td colspan="2"></td>
 					<td>
 						<img src="<?=$this->url ?>img/discountcards/<?=$this->settings['discountCard']?>.png" 
-									title="<?=__('bbh prices',PLUGIN_TRANS_NAMESPACE)?>" 
+									title="<?=__('prices with '.$this->settings['discountCard'],PLUGIN_TRANS_NAMESPACE)?>" 
 									alt="<?=$this->settings['discountCard']?>" />
 					</td>
 				</tr>
@@ -185,7 +170,11 @@ class matrixCalender {
 			</strong></p></div></td></tr>
 		<?php endif ?>
 		</table>
-		<div id="bottomOfCalendar"></div>
+
+			<?php if($this->settings['updateTimeoutOn'] == 'yes') : ?>
+				<small class="floatright" id="timer"><?=sprintf(__('Updating in %s seconds.',PLUGIN_TRANS_NAMESPACE),'<b id="time"></b>');?></small	>
+			<?php endif ?>
+
 		<div id="reviewDiv" class="hidden" >
 			<table id="reviewTable"><tbody>
 				<tr><th colspan="4" id="reviewTitle"></th></tr>

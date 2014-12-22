@@ -11,8 +11,8 @@ class dharmaAdmin   {
 	function doPostActions(){
 		global $wpdb;
 		$this->bookingControler = new bookingControl();
-		
-		switch($_POST['action']){
+		$action = (isset($_POST['action'])?$_POST['action']:'');	
+		switch($action){
 			case 'newbooking':
 				$wpdb->insert($wpdb->prefix.DATABASE_PREFIX.'tempbookings',array('data' => serialize($_POST)));
 				
@@ -22,6 +22,7 @@ class dharmaAdmin   {
 				$this->feedBack = $this->bookingControler->makeNewBooking(0,$wpdb->insert_id);
 				break;
 			case 'checkin':
+				global $wpdb;
 				if($_POST['clubcard'] == 'on' ){
 					$totaldue = $_POST['discounted'];
 					$clubcard  = true;
@@ -63,12 +64,19 @@ class dharmaAdmin   {
 		<?php
 	}
 	function includeScripts(){
-		wp_enqueue_script('jquery' );
-		wp_enqueue_script('jquery-ui-core' );
-		wp_enqueue_script('jquery-ui-datepicker' );
+
+		/*
 		wp_enqueue_script('loadmask',PLUGIN_ROOT_URL.'libs/jquery.loadmask.min.js',array('jquery'));
-		wp_enqueue_script('rfadminscript',plugins_url('scripts.js', __FILE__),array('jquery'));
-		?>
+		wp_enqueue_script('dadminscript',plugins_url('scripts.js', __FILE__),array('jquery','jquery-ui-datepicker','jquery-ui-core'));
+		wp_enqueue_script('jplotmini',  PLUGIN_ROOT_URL.'libs/jplot/jquery.jqplot.min.js',                      array('jquery'));
+		wp_enqueue_script('jplotdate',  PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.dateAxisRenderer.js',        array('jplotmini'));
+		wp_enqueue_script('jplottext',  PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.canvasTextRenderer.js',      array('jplotmini'));
+		wp_enqueue_script('jplotcurs',  PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.cursor.js',                    array('jplotmini'));
+		wp_enqueue_script('jplothi',    PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.highlighter.js',               array('jplotmini'));
+		wp_enqueue_script('jplottick',  PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.canvasAxisTickRenderer.js',  array('jplotmini'));
+		*/
+
+	?>
 		<link rel="stylesheet" type="text/css" href="<?=PLUGIN_ROOT_URL?>libs/css/jquery-ui-1.8.5.custom.css"/>
 		<script type="text/javascript">var pluginUrl = '<?=PLUGIN_ROOT_URL ?>';</script>
 		<?php
@@ -84,7 +92,7 @@ class dharmaAdmin   {
 	}
 
 	function showFeedback (){
-		if($this->feedBack){
+		if(isset($this->feedBack)){
 			?><div id="feedback"><ul><?php foreach($this->feedBack as $feed): ?> 
 				<li class="<?=$feed[0]?>"><?=$feed[1]?></li>
 			<?php endforeach ?></ul></div><?php 
@@ -117,7 +125,7 @@ below is wordpess settings page and menues
 		add_options_page(PLUGIN_TRANS_NAMESPACE, __('Settings',PLUGIN_TRANS_NAMESPACE), __('Settings',PLUGIN_TRANS_NAMESPACE), 'settings_api_sample', array('dharmaAdmin','settings'));
 	}
 	function rentals() 	{ require_once('rentals.php'); }
-	function calendar () { include_once('calendar.php'); }
+   function calendar () { include_once('calendar.php'); }
 	function reports() 	{ $report = new reports;}
 	function dashboard (){ $checkin = new checkinDashboard();	}
    function templates()	{ 
@@ -186,7 +194,7 @@ below is wordpess settings page and menues
 		$Vars = get_option('Dharma_Vars');
 		wp_enqueue_script('jquery-ui-core' );
 		wp_enqueue_script('jquery-ui-datepicker' );
-  		wp_enqueue_script('rfadminscript',plugins_url('scripts.js', __FILE__),array('jquery'));
+		wp_enqueue_script('rfadminscript',plugins_url('scripts.js', __FILE__),array('jquery'));
 		?>
 		<style>
          form{padding: 10px;}
@@ -342,23 +350,22 @@ function cssfiledropdown(){
 	}
  
 	function final_page() {
-      $Vars = get_option('Dharma_Vars');
-      $allPages = get_pages( );
-      ?>
-      <select name="Dharma_Vars[thanksPage]"><?
+		$Vars = get_option('Dharma_Vars');
+		$allPages = get_pages( );
+		?><select name="Dharma_Vars[thanksPage]"><?php
 		foreach($allPages as $aPage){
-			?><option value="<?=$aPage->ID?>" <?php selected( $Vars['thanksPage'], $aPage->ID ); ?>><?=$aPage->post_title?></option><?
-      }
-      ?>        </select>        <?php
+			?><option value="<?=$aPage->ID?>" <?php selected( $Vars['thanksPage'], $aPage->ID ); ?>><?=$aPage->post_title?></option><?php
+		}
+		?></select><?php
 	}
 
 //payment selctions 
-    function Payment_Type() {
-		 $Vars = get_option('Dharma_Vars');
-		 
+	function Payment_Type() {
+		$Vars = get_option('Dharma_Vars');
 		?><select name="Dharma_Vars[paymenttype]">
 		<option value="none" <?php selected( $Vars['paymenttype'], 'none' ); ?>>none</option>
 		<option value="worldpay" <?php selected( $Vars['paymenttype'], 'worldpay' ); ?>>worldPay</option>
+		<option value="paystation" <?php selected( $Vars['paymenttype'], 'paystation' ); ?>>paystation.co.nz</option>
 		</select>	
 		<?php
 	}

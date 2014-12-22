@@ -38,7 +38,7 @@ structrue
 */
 
 #booking-plugin-blackout {	width:100%; z-index:8; height:1000px; position:fixed; left:0px; top:0px;display: none; }
-.displaybox {z-index: 400;border-radius: 3px;font-size: 125%;position:absolute;bottom: 20px;width:530px;margin-left:-260px;left:50%;} 
+.displaybox {z-index: 400;border-radius: 3px;font-size: 125%;position:absolute;width:530px;margin-left:-260px;left:50%;} 
 #calenderDiv,#calendarForm  table {width:100%;}
 #calenderContainerDiv #popoutCalendar {position: absolute; }
 #calenderContainerDiv ,#reviewDiv { position:relative;}

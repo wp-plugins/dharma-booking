@@ -1,5 +1,5 @@
-<?
-require_once('dharmaAdmin.php');
+<?php
+//require_once('dharmaAdmin.php');
 /* this code is thanks to mataias i have changed it around a little but is almost all thats left of his code*/
 function insertBooking ($idguest, $idroomtype, $beds, $dates, $invoice,$offsets = null ) { // offsets is reall post data array... 
  	global $wpdb;
@@ -9,9 +9,8 @@ function insertBooking ($idguest, $idroomtype, $beds, $dates, $invoice,$offsets 
         $sql = "INSERT INTO ".$wpdb->prefix.DATABASE_PREFIX."bookings (idguest, idroomtype, beds, checkin, checkout, invoice)
             VALUES ('$idguest', '$idroomtype', '$beds', ADDDATE('{$dates[0]}', {$offsets[0]}), ADDDATE('{$dates[1]}', {$offsets[1]}),$invoice)";
     }else{
-		$time = $offsets['time'];
-      $sql = "INSERT INTO ".$wpdb->prefix.DATABASE_PREFIX."bookings (idguest, idroomtype, beds, checkin, checkout, invoice,thetime,allbookingdata)
- VALUES ('$idguest', '$idroomtype', '$beds', '".date('Y-m-d',strtotime($dates[0]))."','".date('Y-m-d',strtotime($dates[1]))."',$invoice,'$time','".serialize($offsets)."')";
+			$time = $offsets['time'];
+      $sql = "INSERT INTO ".$wpdb->prefix.DATABASE_PREFIX."bookings (idguest, idroomtype,beds, checkin, checkout, invoice,thetime,allbookingdata) VALUES ('$idguest', '$idroomtype', '$beds', '".date('Y-m-d',strtotime($dates[0]))."','".date('Y-m-d',strtotime($dates[1]))."',$invoice,'$time','".serialize($offsets)."')";
     }
     mysql_query($sql);
 }
@@ -20,7 +19,6 @@ function getAvailab($from, $to, $totalAvailability = false) {
 	global $wpdb;
 	$sql = "SELECT R.id AS idroomtype, R.minimum, D.date, DATEDIFF(D.date, '$from') AS day_no, R.capacity, R.capacity - SUM(B.beds) AS availab
 			FROM
-				/* all important dates (i.e. dates in which the availability changes). dates not present here keep the availability from the previous day.*/
 				(SELECT
 					checkin AS date FROM ".$wpdb->prefix.DATABASE_PREFIX."bookings
 					UNION SELECT checkout FROM ".$wpdb->prefix.DATABASE_PREFIX."bookings
@@ -38,16 +36,14 @@ function getAvailab($from, $to, $totalAvailability = false) {
 			GROUP BY	R.menuorder, D.date, B.idroomtype
 			ORDER BY	R.menuorder";
 	//this addition to the query is used for the ajax availability request, what i don't think is used anymore....
-	if ($totalAvailability)
-		$sql =	"SELECT idroomtype, minimum, MIN(availab) AS maximum FROM ($sql) Availabilities GROUP BY idroomtype, minimum";
-		
-	$res = mysql_query($sql);
+	if ($totalAvailability) $sql =	"SELECT idroomtype, minimum, MIN(availab) AS maximum FROM ($sql) Availabilities GROUP BY idroomtype, minimum";
+	 	
 	$calendar = array();
-	while ($row = mysql_fetch_assoc($res)){
-		if ($totalAvailability){
-			$calendar[$row['idroomtype']] = array(intval($row['minimum']), intval($row['maximum']));
+	foreach($wpdb->get_results($sql) as $d){
+		if ($totalAvailability){ 
+			$calendar[$d->idroomtype] = array(intval($d->minimum), intval($d->maximum));
 		}else{
-			$calendar[$row['idroomtype']][$row['day_no']] = intval($row['availab']);
+			$calendar[$d->idroomtype][$d->day_no] = intval($d->availab);
 		}
 	}
 
@@ -68,24 +64,23 @@ function getAvailab($from, $to, $totalAvailability = false) {
 	return $calendar;
 }
 function getRoomtypesTwo ($forSelect = false) {
-   global $wpdb, $checkinpage;
+  global $wpdb, $checkinpage;
 	$roomtypes = array();
-	$res = mysql_query('SELECT id, name, minimum, capacity, price FROM '.$wpdb->prefix.DATABASE_PREFIX.'roomtypes ORDER by menuorder');
-		while ($row = mysql_fetch_assoc($res)) {
-			if($checkinpage)
-				$roomtypes[intval($row['id'])]['display'] = $forSelect ? "{$row['name']}" : $row;
-			else
-				$roomtypes[intval($row['id'])]['display'] = $forSelect ? "{$row['name']} ({$row['capacity']})" : $row;
+	$sql = 'SELECT id, name, minimum, capacity, price FROM '.$wpdb->prefix.DATABASE_PREFIX.'roomtypes ORDER by menuorder';
+
+	//	while ($row = mysql_fetch_assoc($ as $d){res)) {
+	foreach($wpdb->get_results($sql) as $d){
+			if($checkinpage) $roomtypes[intval($d->id)]['display'] = $forSelect ? "{$d->name}" : $d;
+			else						 $roomtypes[intval($d->id)]['display'] = $forSelect ? "{$d->name} ({$d->capacity})" : $d;
 				
-			$roomtypes[intval($row['id'])]['capacity'] = $row['capacity'];
-			if (!$forSelect)
-				unset($roomtypes[$row['id']]['id']);
+			$roomtypes[intval($d->id)]['capacity'] = $d->capacity;
+			if (!$forSelect) unset($roomtypes[$d->id]['id']);
 		}
 		return $roomtypes;
 }
+
 $typoChecker = 1; //CHANGE THE 1 TO 0 TO STOP BEING ANNOYED BUT RISK MAKING MISTAKES! BWAHAHAHA!
 global $wpdb, $checkinpage; 
-
 
 if (!empty($_POST['availabChanges']) && !empty($_POST['changesDate'])) {
     $date = date('Y-m-d',strtotime($_POST['changesDate']));
@@ -116,6 +111,7 @@ for ($i = 0; $i < $days; $i++) {
     $to = $date->format('Y-m-d');
 }
 $calendar = getAvailab($from, $to);
+
 $roomtypes = getRoomtypesTwo(true);
 
 $url =  PLUGIN_ROOT_URL;
@@ -159,17 +155,17 @@ $dharmaAdmin->includeScripts();
 	
 <table id="availab" class="spsheet" cellspacing="0">
     <thead>
-        <tr> <th>&nbsp;</th> <? foreach ($monthList as $month => $colspan) { ?> <th colspan="<?=$colspan?>"><?=$month?></th> <? } ?> </tr>
-        <tr> <th>&nbsp;</th> <? foreach ($dateList as $date) : ?> <th class="date"><?=$date?></th> <? endforeach ?> </tr>
+        <tr> <th>&nbsp;</th> <?php foreach ($monthList as $month => $colspan) { ?> <th colspan="<?=$colspan?>"><?=$month?></th> <?php } ?> </tr>
+        <tr> <th>&nbsp;</th> <?php foreach ($dateList as $date) : ?> <th class="date"><?=$date?></th> <?php endforeach ?> </tr>
 
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($calendar as $roomId => $dateAvailabilities) {
         ?>
             <tr>
                 <th><?=$roomtypes[$roomId]['display']?></th>
-                <?
+                <?php
                 foreach ($dateAvailabilities as $dayNo => $dateAvailability) : ?>
                     <?php
                     $class = '';
@@ -187,12 +183,12 @@ $dharmaAdmin->includeScripts();
 									<input type="text" id="<?="$roomId-$dayNo"?>" class="beds <?=$class?>" value="<?=$dateAvailability?>"  />
 								<?php endif ?>
                     </td>
-                <? endforeach ?>
+                <?php endforeach ?>
             </tr>
-        <? } ?>
+        <?php } ?>
     </tbody>
 	<thead> 
-		<tr> <th>&nbsp;</th> <? foreach ($dayList as $date) : ?> <th class="date"><?=$dayNameList[$date]?></th> <? endforeach ?> </tr> 
+		<tr> <th>&nbsp;</th> <?php foreach ($dayList as $date) : ?> <th class="date"><?=$dayNameList[$date]?></th> <?php endforeach ?> </tr> 
 	</thead>
 </table>
 

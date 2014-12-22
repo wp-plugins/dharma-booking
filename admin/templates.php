@@ -5,7 +5,6 @@ class templateEngine extends dharmaAdmin 	{
 		$this-> includeCSSnDivs();
 		$this->includeScripts();
 		
-		
 		$this->section = (!empty($_GET['section'])?$_GET['section']:'email');
 		if($_POST) $this->saveTemplate();
 		$this ->makeMenu(array('email','notifications','final page','SMS'), 'email');
@@ -92,7 +91,7 @@ class templateEngine extends dharmaAdmin 	{
 		}
 		?>
 		<div class="clear"></div><input type="submit" value="Save" /></form>
-		<h2>This page is used to build the <?=$section?> templates.</h2>
+		<h2>This page is used to build the <i>"<?=$_GET['section']?>"</i> templates.</h2>
 		<h4>Shortcodes are used as place holders for dynamic text and will be replaced in the final version with there approprate value, for example  [fullname]  will be replaced by the users full name as enterd on the form.<br />
 		The [roomtext] [textmessage] are replaced with there shortcode if listed on the page.<br /> 
 		All shortcodes are lowercase.</h4>

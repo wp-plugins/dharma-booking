@@ -33,8 +33,8 @@ jQuery(function () {
 		}
   		jQuery('#reviewDiv  table tbody #reviewRow_'+this.id).remove();
 		
-		var tPrice = jQuery(this).val() * jQuery('#price_'+this.id).val()*jQuery('#noNights').val()
-		var dPrice = jQuery(this).val() * jQuery('#discount_'+this.id).val()*jQuery('#noNights').val()
+		var tPrice = jQuery(this).val() * jQuery('#price_'+this.id).data('price')*jQuery('#noNights').val()
+		var dPrice = jQuery(this).val() * jQuery('#discount_'+this.id).data('price')*jQuery('#noNights').val()
 		var dRow = '';
       if(discountCard != 'none'){dRow = '<td>$<span class="rentalDiscountSubs">'+dPrice+'</span></td>';}
 		
@@ -53,7 +53,7 @@ jQuery(function () {
 		var totalPrice =0;
 		var totalDiscountPrice = 0 ; 
 		jQuery('.rentalPeopleSubs').each(function(){totalPeople = totalPeople + parseInt(jQuery(this).html());}); 		
-		jQuery('.rentalPriceSubs').each(function(){totalPrice = totalPrice + parseInt(jQuery(this).html());}); 		
+		jQuery('.rentalPriceSubs').each(function(){ totalPrice = totalPrice + parseInt(jQuery(this).html());}); 		
 		jQuery('.rentalDiscountSubs').each(function(){totalDiscountPrice = totalDiscountPrice + parseInt(jQuery(this).html());}); 		
 		
 		var nights = nightString;
@@ -81,7 +81,7 @@ jQuery(function () {
 		jQuery('#formFields').slideDown('slow'); 
 		continueButtonPressed = true;
 		jQuery(this).hide("fold");
-		jQuery('html, body').animate({scrollTop:calendarBottom}, 'slow');
+		//jQuery('html, body').animate({scrollTop:calendarBottom}, 'slow');
 		jQuery('#fullname').focus();
 	});
 	
@@ -111,7 +111,7 @@ jQuery(function () {
 		
 		if (!jQuery("#errorList li").length && (jQuery('#formFields #phone.required ').val() && jQuery('#formFields #fullname.required ').val() && jQuery('#formFields #email.required ').val())){
 			jQuery("#finalCalendarButton").attr("disabled", false);
-			jQuery('#finalCalendarButton small').slideUp();
+			jQuery('.hideme').slideUp();
 			jQuery('#finalCalendarButton big').animate({fontSize:'145%'},200); 
 
 		}
@@ -214,7 +214,7 @@ function submitCalender(input){
 			jQuery('#gatewaypricefull').val(jQuery('#totalPrice').html());
 			if(takeDeposit){
 				jQuery('#gatewaypricedeposit').val(jQuery('#totalPrice').html()/takeDeposit);
-			}				
+			}
 			jQuery('#booking-plugin-blackout, #gateway-div').fadeIn('fast');
 		}
 	});

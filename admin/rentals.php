@@ -1,4 +1,4 @@
-<?
+<?php
 /*next one up for a complet rework !*/
 require_once('dharmaAdmin.php');
 
@@ -8,15 +8,23 @@ $pluginUrl = PLUGIN_ROOT_URL;
 $dharmaAdmin = new dharmaAdmin();
 $addItemOptions = array('menu Order','item name','minimum','capacity','price','discount price','discription');
 
-if ($_POST['action'] == 'delete') {
+if (isset($_POST['action']) && $_POST['action'] == 'delete') {
 	$wpdb->update( $wpdb->prefix.DATABASE_PREFIX.'roomtypes',	array('active' => 0), array('id' => $_POST['deleteItemId'] ));
 }
-if ($_POST['itemadd'] == 'yes') {
-    unset($_POST['itemadd']);
-    $sql = 'INSERT INTO '.$wpdb->prefix.DATABASE_PREFIX.'roomtypes 		
-				(`menuorder`,`name`,`minimum`,`capacity`,`price`,`discount`,`discription`) 
-            VALUES (\''.implode('\',\'',array_values($_POST)).'\')';
-    mysql_query($sql);
+if (isset($_POST['itemadd']) && $_POST['itemadd'] == 'yes') {
+		$wpdb->insert( 
+				$wpdb->prefix.DATABASE_PREFIX.'roomtypes', 
+					array( 
+						'menuorder' => $_POST['menu_Order'],
+						 'name' => $_POST['item_name'],
+						 'minimum' => $_POST['minimum'],
+						 'capacity' => $_POST['capacity'],
+						 'price' => $_POST['price'],
+						 'discount' => $_POST['discount'],
+						 'discription' => $_POST['discription']
+						), 
+						array( '%d', '%s','%d','%d','%d','%d','%s') 
+			);
 }
 $roomtypes = $wpdb->get_results("SELECT id,menuorder,name,minimum,capacity,price,discount,discription FROM ".$wpdb->prefix.DATABASE_PREFIX."roomtypes WHERE active = 1 ORDER BY menuorder",ARRAY_A );
 
@@ -77,28 +85,25 @@ jQuery(function () {
 		<th>Discount</th>
 		<th>Discription</th>
 	</tr>
-	<? foreach ($roomtypes as $roomtype) { ?>
+	<?php foreach ($roomtypes as $roomtype) { ?>
 		<tr>
 			<form>
-			<? foreach ($roomtype as $fieldName => $value) { ?>
-				<? if ($fieldName == 'id') $theId = $value; ?>
-				<? if ($fieldName == 'discription') :	?>
+			<?php foreach ($roomtype as $fieldName => $value) { ?>
+				<?php if ($fieldName == 'id') $theId = $value; ?>
+				<?php if ($fieldName == 'discription') :	?>
 					<td> <input type="button" value="edit" class="editButton" id="<?php echo $theId ?>"/>  
-						<span class="hidden wizyarea popupup-box" id="info-<?php echo $theId ?>">
-						<p>For some reason you must click on the html tab before saving...</p>
-						<h4 class="floatright">
-							<button class="cancelButton" type="button"><?=__('close',PLUGIN_TRANS_NAMESPACE)?></button>
-						</h4>
-						<?php wp_editor( stripslashes($value), 'disc'.$theId, array( 'textarea_name' => 'dscription', 'media_buttons' => true, 'teeny' => true));?>
+						<span class="hidden popupup-box" id="info-<?php echo $theId ?>">
+						<textarea name="dscription" id="disc<?=$theId?>"> <?=stripslashes($value)?></textarea>
+						<button class="cancelButton" type="button"><?=__('x',PLUGIN_TRANS_NAMESPACE)?></button>
 						<div class="clear"></div>	  
 						</span>
 					</td>
-				<?elseif($fieldName == 'id') : ?>
+				<?php elseif($fieldName == 'id') : ?>
 					<input type="hidden" name="id" value="<?=$roomtype['id']?>" id="itemid"/>
-				<? else :?>
+				<?php else :?>
 					<td><input type="text" name="<?=$fieldName?>" value="<?=$value?>" class="<?=$fieldName?>" /> </td>
-				<?  endif ?>
-			<? } ?>
+				<?php  endif ?>
+			<?php } ?>
 			<td><button type="button" class="saveRentalButton">Save</button></td>
 			<td>
 				<input type="hidden" value="<?= $theId?>" class="rentalId" />
@@ -106,7 +111,7 @@ jQuery(function () {
 			</td>
 		</tr>
 		</form>
-	<? } ?>
+	<?php } ?>
 </table>
 
 <h1 id="responce-box"></h1>

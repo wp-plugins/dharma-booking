@@ -32,7 +32,7 @@ class reports extends dharmaAdmin {
 				$occupacity->setup();
 				$occupacity->setStartDate($this->startDate);
 				$occupacity->setEndDate($this->endDate);
-				$occupacity->setVaribles('month');
+				$occupacity->isetupVariables('month');
 				$occupacity->javascriptGo('month');
 				
 			
@@ -49,7 +49,7 @@ class reports extends dharmaAdmin {
 		$this->currentUrl = $_SERVER["PHP_SELF"].'?'.$_SERVER["QUERY_STRING"];
 		$this->limit = intval(!empty($_GET['limit']) ? $_GET['limit'] : 50);
 		$this->pagenumber = intval(!empty($_GET['pagenumber']) ? $_GET['pagenumber'] : 1);
-		$this->orderby = ($_GET['orderby']?$_GET['orderby']:'B.id');
+		$this->orderby = (isset($_GET['orderby'])?$_GET['orderby']:'B.id');
 		$this->sqlStart = date('y-m-d',strtotime($this->startDate));
 		$this->sqlEnd = date('y-m-d',strtotime($this->endDate));
 		$this->url = PLUGIN_ROOT_URL;
@@ -113,17 +113,6 @@ class reports extends dharmaAdmin {
 			</div>
 			<?php
 		}
-	}
-	function includeJplot(){
-		wp_enqueue_script('jplotmini',	PLUGIN_ROOT_URL.'libs/jplot/jquery.jqplot.min.js',											array('jquery'));
-		wp_enqueue_script('jplotdate',	PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.dateAxisRenderer.js',				array('jplotmini'));
-		wp_enqueue_script('jplottext',	PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.canvasTextRenderer.js',			array('jplotmini'));
-		wp_enqueue_script('jplotcurs',	PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.cursor.js',										array('jplotmini'));
-		wp_enqueue_script('jplothi',		PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.highlighter.js',								array('jplotmini'));
-		wp_enqueue_script('jplottick',	PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.canvasAxisTickRenderer.js',	array('jplotmini'));
-		?>
-		<link rel="stylesheet" type="text/css" href="<?=$this->url?>libs/jplot/jquery.jqplot.min.css" />
-		<?php 
 	}
 	
 /*
@@ -192,7 +181,7 @@ class reports extends dharmaAdmin {
 				<th>price</th>
 				<th></th>
 			</tr>
-			<? 
+			<?php 
 			foreach ($bookings as $booking) { 
 				$nights = findNonights($booking->checkin,$booking->checkout) ;
 				$noNights =  $nights;
@@ -207,7 +196,7 @@ class reports extends dharmaAdmin {
 					<td><?=$booking->comment?></td>
 					<td>$<?=($noNights*$booking->beds*$booking->price)?></td>
 				</tr>
-			<? } ?>
+			<?php } ?>
 			<tr>
 				<th colspan="5" style="text-align:right">Total</th>
 				<th>$<?=money_format('%.2n', $priceTotal)?></th>
@@ -251,7 +240,7 @@ shows data focaused on guests
 		</div>
 		
 		<table width="100%" id="bookingReportTable">
-			<? foreach ($guests as $guest) :
+			<?php foreach ($guests as $guest) :
 				$totalRentals=0;
 				$totalNights	=0;
 				$totalBalance=0;
@@ -317,7 +306,7 @@ shows data focaused on guests
 				Total Nights: <?=$totalNights?> Total Guests : <?=$totalRentals?> 
 				Total Balance: <span class="<?=($totalBalance<0 ?'fail':'success')?>"><?=$totalBalance?></span>
 			</span></th></tr>
-    <? endforeach ?>
+    <?php endforeach ?>
 	</table>
 
 	<?php

@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('../../../../../wp-config.php');
 include_once('../functions.php');
 
@@ -23,6 +23,8 @@ $balance = ($data->payment - $data->totaldue);
 $class = ($balance < 0 ? 'warning':'success');
 
 ?>
+<h3><button type="button" class="cancelButton floatright xButton">X</button></h3>
+
 <h2><?=$data->Gname?>
 <?php if($data->phone):?>
 	<a href="tell:<?=$data->phone?>"><img src="<?=PLUGIN_ROOT_URL?>/img/phone.png" alt="<?=__('call phone',PLUGIN_TRANS_NAMESPACE)?>" /></a>
@@ -45,8 +47,9 @@ $class = ($balance < 0 ? 'warning':'success');
 </big>
 	
 <br />
-balance : <span class="<?=$class?>"><?=$Vars['currancySymbol'].money_format('%.2n',$balance)?></span><br />
-
+balance : <span class="<?=$class?>">$<?=money_format('%.2n',$balance)?></span><br />
+<br />
+nights: <?=$data->numberofnights?>
 
 <ul><?php foreach($rentals as $rental) :?>
 	<li>

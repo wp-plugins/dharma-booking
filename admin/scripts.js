@@ -153,7 +153,8 @@ jQuery(function () {
 
    //wordpress settings page 
    jQuery('#settingspage h3').click(function(){
-		jQuery(this).next('table').toggle("fast");
+		jQuery(this).next('table').slideDown("fast");
+		//jQuery(this).next('table').toggle("fast");
    });
 });
 

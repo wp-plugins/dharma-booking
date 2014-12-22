@@ -27,7 +27,6 @@ class checkinDashboard extends dharmaAdmin{
          FROM `".$wpdb->prefix.DATABASE_PREFIX."bookings` B 
              LEFT JOIN ".$wpdb->prefix.DATABASE_PREFIX."guests G ON B.idguest = G.id 
              LEFT JOIN ".$wpdb->prefix.DATABASE_PREFIX."invoices I ON B.invoice = I.invoice 
-         Where G.id <> 1 
 				AND (DATE('$from') BETWEEN B.checkin AND B.checkout
             OR ADDDATE('$from', ".$this->days.") BETWEEN B.checkin AND B.checkout
             OR (B.checkin >= DATE('$from') AND B.checkout <= ADDDATE('$from', ".$this->days.")))	
@@ -185,10 +184,10 @@ class checkinDashboard extends dharmaAdmin{
 				<?php foreach($rentals as $rental) : ?>
 					<div style="min-width:200px;float:left;	">
 						<input style="width:37px;"	 type="number" name="rooms[<?=$rental->id?>]"  min="0" /><strong><?=$rental->name?></strong> : 
-						<?=$rental->minimum?> - <?=$rental->capacity?> <img src="<?=PLUGIN_ROOT_URL?>/img/guests.png" alt="" title="<?=__('Guests',PLUGIN_TRANS_NAMESPACE)?>" />
+						<?=$rental->minimum?> - <?=$rental->capacity?> <img src="<?=PLUGIN_ROOT_URL?>/img/guests.png" alt="" title="Guests" />
 						<span class="price hidden"><?=$rental->price?></span><span class="hidden discount"><?=$rental->discount?></span>
 					</div>
-				<?endforeach?>
+				<?php endforeach?>
 			</div>
 				<div class="floatleft">
 				<div>
@@ -279,6 +278,7 @@ class checkinDashboard extends dharmaAdmin{
 			<h2>Showing bookings untill <?=date('l, dS F Y',strtotime($this->days.' days'))?>.</h2>		<div class="clear"</div>
 		</div>
 		<?php
+
 	}
 	
 	private function showLaundry($day){
@@ -304,8 +304,18 @@ class checkinDashboard extends dharmaAdmin{
 	}
 	/*the javascript css's and div's what go above and are used by interface */
 	function echoDashboardSetup(){
+wp_enqueue_script('loadmask',PLUGIN_ROOT_URL.'libs/jquery.loadmask.min.js',array('jquery'));
+wp_enqueue_script('dadminscript',plugins_url('scripts.js', __FILE__),array('jquery','jquery-ui-datepicker','jquery-ui-core'));
+wp_enqueue_script('jplotmini',  PLUGIN_ROOT_URL.'libs/jplot/jquery.jqplot.min.js',                      array('jquery'));
+wp_enqueue_script('jplotdate',  PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.dateAxisRenderer.js',        array('jplotmini'));
+wp_enqueue_script('jplottext',  PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.canvasTextRenderer.js',      array('jplotmini'));
+wp_enqueue_script('jplotcurs',  PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.cursor.js',                    array('jplotmini'));
+wp_enqueue_script('jplothi',    PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.highlighter.js',               array('jplotmini'));
+wp_enqueue_script('jplottick',  PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.canvasAxisTickRenderer.js',  array('jplotmini'));
+
+
 		$this->includeScripts();
-		$this-> includeCSSnDivs();
+		$this->includeCSSnDivs();
 		$this->showFeedback();
 		?>
 		<script type="text/javascript"><!-- 

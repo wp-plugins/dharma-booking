@@ -1,4 +1,4 @@
-<?
+<?php
 require_once('../../../../../wp-config.php');
 require_once('../calender.php');
 $calendar = new matrixCalender();
