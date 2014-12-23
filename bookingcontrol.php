@@ -141,7 +141,7 @@ class bookingControl {
 				
 				$this->data['updatetime'] = time();
 				$updateFields['updatetime'] = date('Y-m-d h:m:s',time());
-				$temprec= $wpdb->get_var( $wpdb->prepare('SELECT totaldue FROM '.$wpdb->prefix.DATABASE_PREFIX.'invoices WHERE invoice = '.$tempid));
+				$temprec= $wpdb->get_var( $wpdb->prepare('SELECT totaldue FROM '.$wpdb->prefix.DATABASE_PREFIX.'invoices WHERE invoice = %s',$tempid));
 				if(!empty($temprec)){
 					$this->temprecorded = true;
 					$status = array('fail',__('invoice already recorded',PLUGIN_TRANS_NAMESPACE));
@@ -210,7 +210,7 @@ class bookingControl {
 											
 		//smaller version of replacements used for email subjects and sms's 
 		$this->replaceSmall = $this->replacements ;
- 		$shortcodes = $wpdb->get_results( $wpdb->prepare( 'SELECT name,data FROM '.$wpdb->prefix.DATABASE_PREFIX.'templates WHERE `section` LIKE  \''.$section.'\' AND `type` LIKE \'shortcode\'' ));
+ 		$shortcodes = $wpdb->get_results( $wpdb->prepare( 'SELECT name,data FROM '.$wpdb->prefix.DATABASE_PREFIX.'templates WHERE `section` LIKE  \'%s\' AND `type` LIKE \'shortcode\'',$section ));
 
 		foreach($shortcodes as $item ){
 			switch($item->name){
@@ -258,20 +258,16 @@ communication functoins email, sms
 		$replyToEmail = $baseVars['replyEmail'];
 		
 		//send client email
-		$subject= $wpdb->get_var( $wpdb->prepare( 'SELECT data FROM '.$wpdb->prefix.DATABASE_PREFIX.'templates
-																								WHERE `section` LIKE  \'email\' AND name LIKE \'subject\'' ) );
-		$body= $wpdb->get_var( $wpdb->prepare( 'SELECT data FROM '.$wpdb->prefix.DATABASE_PREFIX.'templates
-																								WHERE `section` LIKE  \'email\' AND name LIKE \'body\'' ) );
+		$subject= $wpdb->get_var('SELECT data FROM '.$wpdb->prefix.DATABASE_PREFIX.'templates WHERE `section` LIKE  \'email\' AND name LIKE \'subject\'' );
+		$body= $wpdb->get_var('SELECT data FROM '.$wpdb->prefix.DATABASE_PREFIX.'templates WHERE `section` LIKE  \'email\' AND name LIKE \'body\'' );
 		$this->createReplacements('email');
 		$this->sendAmail($officeEmail,$replyToEmail,$this->data['email'],
 											str_replace(array_keys($this->replaceSmall),array_values($this->replaceSmall), $subject),
 											str_replace(array_keys($this->replacements),array_values($this->replacements), $body)
 											);
 		//office email
-		$subject= $wpdb->get_var( $wpdb->prepare( 'SELECT data FROM '.$wpdb->prefix.DATABASE_PREFIX.'templates
-																						WHERE `section` LIKE  \'notifications\' AND name LIKE \'subject\'' ) );
-		$body= $wpdb->get_var( $wpdb->prepare( 'SELECT data FROM '.$wpdb->prefix.DATABASE_PREFIX.'templates
-																						WHERE `section` LIKE  \'notifications\' AND name LIKE \'body\'' ) );
+		$subject= $wpdb->get_var(  'SELECT data FROM '.$wpdb->prefix.DATABASE_PREFIX.'templates WHERE `section` LIKE  \'notifications\' AND name LIKE \'subject\''  );
+		$body= $wpdb->get_var(  'SELECT data FROM '.$wpdb->prefix.DATABASE_PREFIX.'templates WHERE `section` LIKE  \'notifications\' AND name LIKE \'body\''  );
 		$this->createReplacements('notifications');
 		$this->sendAmail($this->data['fullname'].'<'.$this->data['email'].'>',$this->data['email'],$officeEmail,
 											str_replace(array_keys($this->replaceSmall),array_values($this->replaceSmall), $subject),
@@ -287,14 +283,10 @@ communication functoins email, sms
 				$data= $wpdb->get_var( $wpdb->prepare( 'SELECT data FROM '.$wpdb->prefix.DATABASE_PREFIX.'templates
 																						WHERE `section` LIKE  \'sms\' AND name LIKE \'officesms\'' ) );
 				if($this->siteVars['bookingState'] == 'testing') echo '<h2>Office sms</h2>';
-				$this->sendAsms($smsVars['smsPhone'], 
-													$this->data['phone'],
-							stripslashes(str_replace(array_keys($this->replaceSmall),array_values($this->replaceSmall), $data))
-													);
+				$this->sendAsms($smsVars['smsPhone'], $this->data['phone'], stripslashes(str_replace(array_keys($this->replaceSmall),array_values($this->replaceSmall), $data)));
 			} 
 			if($this->data['checkbox']["textmessage"]){
-				$data= $wpdb->get_var( $wpdb->prepare( 'SELECT data FROM '.$wpdb->prefix.DATABASE_PREFIX.'templates
-																						WHERE `section` LIKE  \'sms\' AND name LIKE \'clientsms\'' ) );
+				$data= $wpdb->get_var(  'SELECT data FROM '.$wpdb->prefix.DATABASE_PREFIX.'templates WHERE `section` LIKE  \'sms\' AND name LIKE \'clientsms\'' );
 				if($this->siteVars['bookingState'] == 'testing') echo '<h2>Client sms</h2>';
 				$this->sendAsms($this->data['phone'],
 													$smsVars['smsPhone'],
@@ -349,7 +341,7 @@ communication functoins email, sms
 		}
 		foreach($this->data['rooms'] as $id => $amt ) {
 			if($amt >0){				
-				$price = $wpdb->get_row($wpdb->prepare('SELECT price,discount FROM '.$wpdb->prefix.DATABASE_PREFIX.'roomtypes WHERE id='.$id));
+				$price = $wpdb->get_row($wpdb->prepare('SELECT price,discount FROM '.$wpdb->prefix.DATABASE_PREFIX.'roomtypes WHERE id=%d',$id));
 				$total += $price->price * $amt*$this->data['noNights'];
 				$dtotal += $price->discount * $amt*$this->data['noNights'];
 			}

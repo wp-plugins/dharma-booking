@@ -6,7 +6,7 @@ global $wpdb;
 
 $pluginUrl = PLUGIN_ROOT_URL;
 $dharmaAdmin = new dharmaAdmin();
-$addItemOptions = array('menu Order','item name','minimum','capacity','price','discount price','discription');
+$addItemOptions = array('menu Order','item name','minimum','capacity','price','discount','discription');
 
 if (isset($_POST['action']) && $_POST['action'] == 'delete') {
 	$wpdb->update( $wpdb->prefix.DATABASE_PREFIX.'roomtypes',	array('active' => 0), array('id' => $_POST['deleteItemId'] ));
