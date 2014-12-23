@@ -3,7 +3,7 @@
 Plugin Name: Dharma booking
 Plugin URI: http://earthling.za.org/
 Description: A self contained accomadation booking system, with a modulear disinge and front desk chekin page. Completly open GPL.  
-Version: 2.2
+Version: 2.21
 Author: Jamie MacDonlad
 Author URI: http://earthling.za.org
 */
