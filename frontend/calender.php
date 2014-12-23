@@ -69,23 +69,7 @@ class matrixCalender {
 				<div id="calenderDiv"><?php $this->showCalendarMatrix();?></div>
 				<button type="button" id="continue-button" class="floatright hidden"><?php _e('Continue',PLUGIN_TRANS_NAMESPACE);?></button>
 			</div>	
-			
-
-			<div id="formFields" class="hidden">
-				<?php echo makeInputs(userInfoDetails()); ?>
-				<div class="clear"></div>
-				<div id="callender-button-div">
-					<div class="floatright">
-						<button id="finalCalendarButton" type="button" > <big><?php _e('Book Now',PLUGIN_TRANS_NAMESPACE);?></big> </button>
-						<br />
-						<small class="hideme"> <?php _e('Complete required(*) fields to unlock.',PLUGIN_TRANS_NAMESPACE);?> </small>
-					</div>
-					<div id="errorDiv" class="hidden"><strong><?=__('Please enter',PLUGIN_TRANS_NAMESPACE)?></strong><ul id="errorList"></ul></div>
-					<div class="clear"></div>
-				</div>
-			</div>
-		</form>
-		<div class="clear"></div>
+	
 		<?php if($this->gateway == 'none'):?>
 			<form id="paymentGatewayForm" action="<?=get_permalink($this->thanksPage)?>" method="post" class="hidden">
 				<input type="hidden" name="invoice" id="invoice" value="0" />
@@ -116,6 +100,24 @@ class matrixCalender {
 				<?php endif ?>
 			</div></div>
 		<?php endif ?>
+
+		
+
+			<div id="formFields" class="hidden">
+				<?php echo makeInputs(userInfoDetails()); ?>
+				<div class="clear"></div>
+				<div id="callender-button-div">
+					<div class="floatright">
+						<button id="finalCalendarButton" type="button" > <big><?php _e('Book Now',PLUGIN_TRANS_NAMESPACE);?></big> </button>
+						<br />
+						<small class="hideme"> <?php _e('Complete required(*) fields to unlock.',PLUGIN_TRANS_NAMESPACE);?> </small>
+					</div>
+					<div id="errorDiv" class="hidden"><strong><?=__('Please enter',PLUGIN_TRANS_NAMESPACE)?></strong><ul id="errorList"></ul></div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</form>
+		<div class="clear"></div>
 		</div>
 	<?php
 	}
