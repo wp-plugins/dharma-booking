@@ -94,6 +94,8 @@ class matrixCalender {
 			</form>
 		<?php else: ?>
 			<div id="gateway-div" class="hidden displaybox " ><div id="gateway-inner">
+					<script>var takeDeposit = false;</script>
+					<script type="text/javascript">var takeDeposit = false;</script>
 				<ul id="final-details-overview"></ul>
 				<div id="final-payment-overview"></div>
 				<small>
@@ -105,10 +107,10 @@ class matrixCalender {
 				</small>
 				<div class="clear"></div>
 				<?php  if($this->settings['takeFull']):?>
-					<script type="text/javascript">var takeDeposit = false;</script>
 					<button> <?php _e('Pay full amount',PLUGIN_TRANS_NAMESPACE)?> </button> 
 				<?php endif ?>
 				<?php if($this->settings['takeDeposit']): ?>
+					<script>takeDeposit = true</script>
 					<button> <?php printf( __( 'Pay %d%% deposit', PLUGIN_TRANS_NAMESPACE) ,$this->settings['payment_depoist']);?> </button>
 					<script>var takeDeposit = true</script>
 				<?php endif ?>
