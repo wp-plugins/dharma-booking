@@ -110,7 +110,7 @@ class matrixCalender {
 				<?php endif ?>
 				<?php if($this->settings['takeDeposit']): ?>
 					<button> <?php printf( __( 'Pay %d%% deposit', PLUGIN_TRANS_NAMESPACE) ,$this->settings['payment_depoist']);?> </button>
-					<script type="text/javascript">var takeDeposit = '.$this->settings['payment_depoist'].'</script>
+					<script type="text/javascript">var takeDeposit = true</script>
 				<?php endif ?>
 			</div></div>
 		<?php endif ?>
