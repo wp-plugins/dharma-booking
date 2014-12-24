@@ -45,7 +45,7 @@ class matrixCalender {
       
 		if($this->settings['bookingState'] == 'testing') echo $this->settings['TestingText'];
 		?>
-    <script type="text/javascript">var discountCard = '<?=$this->settings['discountCard']?>';</script>		
+    <script>var discountCard = '<?=$this->settings['discountCard']?>';</script>		
     <div id="booking-calendar">
 		<div id="booking-plugin-blackout" ></div>
 		<noscript><h1 class="errors"><?=__('This page requires javascript to use.',PLUGIN_TRANS_NAMESPACE)?></h1></noscript>
@@ -78,8 +78,9 @@ class matrixCalender {
 			</form>
 		<?php else: ?>
 			<div id="gateway-div" class="hidden displaybox " ><div id="gateway-inner">
+				<input type="hidde" name="invoice" id="invoiceID" value="0" />
 					<script>var takeDeposit = false;</script>
-					<script type="text/javascript">var takeDeposit = false;</script>
+					<script type="text/javascript">var takeDeposit = false; </script>
 				<ul id="final-details-overview"></ul>
 				<div id="final-payment-overview"></div>
 				<small>
@@ -91,13 +92,13 @@ class matrixCalender {
 				</small>
 				<div class="clear"></div>
 				<?php  if($this->settings['takeFull']):?>
-					<button> <?php _e('Pay full amount',PLUGIN_TRANS_NAMESPACE)?> </button> 
+					<button id="fullbutton" data-amount=""> <?php _e('Pay full amount',PLUGIN_TRANS_NAMESPACE)?> </button> 
 				<?php endif ?>
 				<?php if($this->settings['takeDeposit']): ?>
-					<script>takeDeposit = true</script>
-					<button> <?php printf( __( 'Pay %d%% deposit', PLUGIN_TRANS_NAMESPACE) ,$this->settings['payment_depoist']);?> </button>
-					<script>var takeDeposit = true</script>
+					<script>takeDeposit = true; var depositAmt = <?=$this->settings['payment_depoist']?></script>
+					<button data-amount=""id="depositbutton"> <?php printf( __( 'Pay %d%% deposit', PLUGIN_TRANS_NAMESPACE) ,$this->settings['payment_depoist']);?> </button>
 				<?php endif ?>
+					<?=sprintf(__('Payments made though %s.',PLUGIN_TRANS_NAMESPACE),$this->settings['paymenttype']);?><br />
 			</div></div>
 		<?php endif ?>
 

@@ -17,6 +17,7 @@ function includeFrontendScripts($type =  '',$strings,$settings){
 		case 'calender':
 			$refresh = $pluginUrl.'frontend/ajax/Calender.php';
 			$process = $pluginUrl.'frontend/ajax/Procces.php';
+			$gatewayProcess = $pluginUrl.'frontend/ajax/gateways/proccess.php';
 			break;
 		default:
 			break;
@@ -27,6 +28,7 @@ function includeFrontendScripts($type =  '',$strings,$settings){
 	<script type="text/javascript">
 		var refreshPage 	= '<?=$refresh ?>';
 		var ajaxProccess	='<?=$process ?>';
+		var gatewayProccess 	='<?=$gatewayProcess?>';
 		var gatewayType 	='<?=$settings['paymenttype']?>';
 		var timerBase = '<?=($settings['updateTime']*60)?>';;
 		var timerWarning = '<?=$settings['updateWarning']?>';;

@@ -127,8 +127,27 @@ jQuery(function () {
 		}
   		return false;
 	});
-});
+	// payment buttons 
 
+	jQuery('#gateway-inner button').click(function(){ sendPayment(jQuery(this).data('amount'));return false; });
+});
+function sendPayment(amount){
+
+	var request = jQuery.ajax({
+		url: gatewayProccess,
+		type: "GET",
+		data: {amount: amount , gateway: gatewayType, invoice: jQuery('#invoiceID').val()},
+		cache: false,
+		dataType: 'text'
+	});
+	request.done(function(msg) {
+		alert(msg);
+		return false;
+	});
+	request.fail(function(jqXHR, textStatus) {
+	  alert(requestFailString );
+	});
+}
 var Validator = {
 	"fullname": {
 		"wrong": validnameString,
@@ -209,11 +228,13 @@ function submitCalender(input){
 																	'</li><li>'+jQuery('#phone').val()+
 																	'</li><li>'+jQuery('#email').val()+'</li>');
 			jQuery('#final-payment-overview').html(jQuery('#reviewDiv').html());
-			jQuery('.gatewayInvoiceID').val(msg);
+			jQuery('#invoiceID').val(msg);
 			jQuery('.gatewaydiscription').val(jQuery('#reviewTitle').html());
 			jQuery('#gatewaypricefull').val(jQuery('#totalPrice').html());
+			jQuery('#fullbutton').attr('data-amount',jQuery('#totalPrice').html());
 			if(takeDeposit){
 				jQuery('#gatewaypricedeposit').val(jQuery('#totalPrice').html()/takeDeposit);
+				jQuery('#depositbutton').attr('data-amount',jQuery('#totalPrice').html()*(depositAmt/100));
 			}
 			jQuery('#booking-plugin-blackout, #gateway-div').fadeIn('fast');
 		}
