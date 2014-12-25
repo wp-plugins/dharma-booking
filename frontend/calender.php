@@ -87,8 +87,10 @@ class matrixCalender {
 					<?=sprintf(__('Prices are in %s &amp; per person per night',PLUGIN_TRANS_NAMESPACE),$this->settings['payment_currency_code']);?><br />
 					<?=sprintf(__('',PLUGIN_TRANS_NAMESPACE),$this->settings['payment_currency_code']);?><br />
 					<?php if($this->settings['discountCard'] != 'none'):?>
-						<?php _e('Discount prices available upon check in.',PLUGIN_TRANS_NAMESPACE)?>
+						<?php _e('Discount prices available upon check in.',PLUGIN_TRANS_NAMESPACE)?><br />
+
 					<?php endif ?>
+					<?=sprintf(__('Payments made though %s.',PLUGIN_TRANS_NAMESPACE),$this->settings['paymenttype']);?>			
 				</small>
 				<div class="clear"></div>
 				<?php  if($this->settings['takeFull']):?>
@@ -98,7 +100,6 @@ class matrixCalender {
 					<script>takeDeposit = true; var depositAmt = <?=$this->settings['payment_depoist']?></script>
 					<button data-amount=""id="depositbutton"> <?php printf( __( 'Pay %d%% deposit', PLUGIN_TRANS_NAMESPACE) ,$this->settings['payment_depoist']);?> </button>
 				<?php endif ?>
-					<?=sprintf(__('Payments made though %s.',PLUGIN_TRANS_NAMESPACE),$this->settings['paymenttype']);?><br />
 			</div></div>
 		<?php endif ?>
 

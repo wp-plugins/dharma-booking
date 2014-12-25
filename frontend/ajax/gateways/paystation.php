@@ -1,10 +1,9 @@
 <?php
+function doIt($amount,$invoice,$accountid,$gatewayid){
 
-function doIt($amount,$invoice){
-
-	$amount		= ($amount * 100);
-	$paystationId	= 'PAYSTATIONID'; //Paystation ID - Replace PAYSTATIONID with your Paystation ID.
-	$gatewayId	= 'GATEWAYID'; //Gateway ID - Replace GATEWAYID with your GATEWAY ID.
+	//$amount		= ($amount * 100);
+	$paystationId	= $accountid; //'PAYSTATIONID'; //Paystation ID - Replace PAYSTATIONID with your Paystation ID.
+	$gatewayId	= $gatewayid; //'GATEWAYID'; //Gateway ID - Replace GATEWAYID with your GATEWAY ID.
 	$merchantRef = urlencode($invoice); //merchant reference is optional, but is a great way to tie a transaction in with a customer (this is displayed in Paystation Administration when looking at transaction details). Max length is 64 char. Make sure you use it!
 	$testMode = 'true'; //change this to 'false' for production transactions.
 
@@ -32,7 +31,7 @@ function doIt($amount,$invoice){
 	$transactionID =  $xmlData->PaystationTransactionID;  //The transaction ID Paystation has just created.
 	$PaymentRequestTime =  $xmlData->PaymentRequestTime; // The time that the transaction was initiated
 	$DigitalOrderTime =  $xmlData->DigitalOrderTime;  //The time Paystation responds
-	var_dump($xmlData );
+	return $xmlData;
 }
 
 /*----------------Functions Start----------------*/
