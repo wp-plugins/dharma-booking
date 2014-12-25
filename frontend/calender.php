@@ -78,7 +78,7 @@ class matrixCalender {
 			</form>
 		<?php else: ?>
 			<div id="gateway-div" class="hidden displaybox " ><div id="gateway-inner">
-				<input type="hidde" name="invoice" id="invoiceID" value="0" />
+				<input type="hidden" name="invoice" id="invoiceID" value="0" />
 					<script>var takeDeposit = false;</script>
 					<script type="text/javascript">var takeDeposit = false; </script>
 				<ul id="final-details-overview"></ul>
