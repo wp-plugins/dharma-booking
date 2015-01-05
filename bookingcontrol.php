@@ -50,8 +50,7 @@ class bookingControl {
 	private function displayPage(){		
 		global $wpdb;
 		$this->createReplacements('final page');
-		$body= $wpdb->get_var( $wpdb->prepare( 'SELECT data FROM '.$wpdb->prefix.DATABASE_PREFIX.'templates
-																								WHERE `section` LIKE %s AND name LIKE %s','final page','body') );
+		$body= $wpdb->get_var($wpdb->prepare( 'SELECT data FROM '.$wpdb->prefix.DATABASE_PREFIX.'templates WHERE `section` LIKE %s AND name LIKE %s','final page','body') );
 		echo stripslashes(str_replace(array_keys($this->replacements), array_values($this->replacements), $body));
 	}
 	
@@ -80,6 +79,7 @@ class bookingControl {
 	
 	/*insert this booking into the database*/
 	function insertBookings ($guestid,$checkedin) {
+
 		global $wpdb;
 		if($id = $wpdb->get_var($wpdb->prepare('SELECT id FROM '.$wpdb->prefix.DATABASE_PREFIX.'bookings WHERE invoice = %s ',$this->invoice))){
 			return array('fail',__('This booking has already been made',PLUGIN_TRANS_NAMESPACE));

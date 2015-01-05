@@ -171,7 +171,7 @@ below is wordpess settings page and menues
 		add_settings_section('P_ID','Payment Gateways',array('dharmaAdmin','overview'),'D_Settings');
 		add_settings_field('Payment_ID',            'GateWay',array('dharmaAdmin','Payment_Type'),'D_Settings','P_ID'                                                  );
 		add_settings_field('Payment_Account',       'Account ID',array('dharmaAdmin','text'),'D_Settings','P_ID',               array('Dharma_Vars','paymentAccount'));
-		add_settings_field('Payment_gatewayID',     'gateway ID',array('dharmaAdmin','text'),'D_Settings','P_ID',               array('Dharma_Vars','gatewayid'));
+		add_settings_field('Payment_gatewayID',     'gateway url',array('dharmaAdmin','text'),'D_Settings','P_ID',               array('Dharma_Vars','gatewayurl'));
 		add_settings_field('Payment_Currency',      'Currency Code',array('dharmaAdmin','text'),'D_Settings', 'P_ID',        array('Dharma_Vars','payment_currency_code'));
 		add_settings_field('Payment_Deposit_Amount','Deposit Persent',array('dharmaAdmin', 'number'), 'D_Settings', 'P_ID',  array('Dharma_Vars','payment_depoist'));
 		add_settings_field('Payment_Take_Deposit',  'Take Deposit',array('dharmaAdmin', 'checkbox'), 'D_Settings', 'P_ID',   array('Dharma_Vars','takeDeposit'));

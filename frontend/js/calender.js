@@ -121,7 +121,7 @@ jQuery(function () {
 
 		if(parseInt(jQuery('#totalPrice').html()) > 0 ){
 			jQuery("#page").mask(proccessingString);
-			submitCalender(jQuery('#calendarForm').serialize()); 
+			submitCalender(jQuery('#calendarForm, #formFields').serialize()); 
 		}else{
 			alert(noGuestsAlertString);
 		}

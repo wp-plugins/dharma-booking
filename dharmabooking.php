@@ -3,7 +3,7 @@
 Plugin Name: Dharma booking
 Plugin URI: http://earthling.za.org/
 Description: A self contained accomadation booking system, with a modulear disinge and front desk chekin page. Completly open GPL.  
-Version: 2.25.2
+Version: 2.26
 Author: Jamie MacDonlad
 Author URI: http://earthling.za.org
 */
@@ -23,7 +23,7 @@ extra short-codes and widgets
 */
 
 define( 'PLUGIN_ROOT_PATH', plugin_dir_path(__FILE__) );
-define( 'PLUGIN_ROOT_URL',plugins_url().'/dharma-booking/' );
+define( 'PLUGIN_ROOT_URL',plugins_url().'/dharmabooking/' );
 define( 'PLUGIN_TRANS_NAMESPACE','dharma' );
 define( 'DATABASE_PREFIX','dh_' );
 
@@ -63,8 +63,7 @@ function  final_page () {
 		return ;
 	}
 	global $wpdb;
-	$bookingData = unserialize($wpdb->get_var($wpdb->prepare('SELECT data FROM '.$wpdb->prefix.DATABASE_PREFIX.'tempbookings WHERE id = %s',$_POST['invoice'])));
-	
+	$bookingData = unserialize($wpdb->get_var($wpdb->prepare('SELECT data FROM '.$wpdb->prefix.DATABASE_PREFIX.'tempbookings WHERE id = %d',$_POST['invoice'])));
 	$bookingControler = new bookingControl();
 	$bookingControler->setupData($bookingData, array('payment'=>$_POST['payment'],'invoice'=>$_POST['invoice'])	);
 	if($bookingControler->siteVars['bookingState'] == 'testing') echo '<h1 class="debugclass">'.__('This sytem is in testing.',PLUGIN_TRANS_NAMESPACE).'</h1>';

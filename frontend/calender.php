@@ -69,6 +69,7 @@ class matrixCalender {
 				<div id="calenderDiv"><?php $this->showCalendarMatrix();?></div>
 				<button type="button" id="continue-button" class="floatright hidden"><?php _e('Continue',PLUGIN_TRANS_NAMESPACE);?></button>
 			</div>	
+		</form>
 	
 		<?php if($this->gateway == 'none'):?>
 			<form id="paymentGatewayForm" action="<?=get_permalink($this->thanksPage)?>" method="post" class="hidden">
@@ -85,12 +86,12 @@ class matrixCalender {
 				<div id="final-payment-overview"></div>
 				<small>
 					<?=sprintf(__('Prices are in %s &amp; per person per night',PLUGIN_TRANS_NAMESPACE),$this->settings['payment_currency_code']);?><br />
-					<?=sprintf(__('',PLUGIN_TRANS_NAMESPACE),$this->settings['payment_currency_code']);?><br />
+					<br />
 					<?php if($this->settings['discountCard'] != 'none'):?>
 						<?php _e('Discount prices available upon check in.',PLUGIN_TRANS_NAMESPACE)?><br />
-
 					<?php endif ?>
-					<?=sprintf(__('Payments made though %s.',PLUGIN_TRANS_NAMESPACE),$this->settings['paymenttype']);?>			
+					<br />
+					<?=sprintf(__('Payments made though <a href="%s">%s</a>.',PLUGIN_TRANS_NAMESPACE),$this->settings['gatewayurl'],$this->settings['paymenttype']);?>			
 				</small>
 				<div class="clear"></div>
 				<?php  if($this->settings['takeFull']):?>
@@ -105,18 +106,17 @@ class matrixCalender {
 
 		
 
-			<div id="formFields" class="hidden">
-				<?php echo makeInputs(userInfoDetails()); ?>
-				<div class="clear"></div>
-				<div id="callender-button-div">
-					<div class="floatright">
-						<button id="finalCalendarButton" type="button" > <big><?php _e('Book Now',PLUGIN_TRANS_NAMESPACE);?></big> </button>
-						<br />
-						<small class="hideme"> <?php _e('Complete required(*) fields to unlock.',PLUGIN_TRANS_NAMESPACE);?> </small>
-					</div>
-					<div id="errorDiv" class="hidden"><strong><?=__('Please enter',PLUGIN_TRANS_NAMESPACE)?></strong><ul id="errorList"></ul></div>
-					<div class="clear"></div>
+		<form id="formFields" class="hidden">
+			<?php echo makeInputs(userInfoDetails()); ?>
+			<div class="clear"></div>
+			<div id="callender-button-div">
+				<div class="floatright">
+					<button id="finalCalendarButton" type="button" > <big><?php _e('Book Now',PLUGIN_TRANS_NAMESPACE);?></big> </button>
+					<br />
+					<small class="hideme"> <?php _e('Complete required(*) fields to unlock.',PLUGIN_TRANS_NAMESPACE);?> </small>
 				</div>
+				<div id="errorDiv" class="hidden"><strong><?=__('Please enter',PLUGIN_TRANS_NAMESPACE)?></strong><ul id="errorList"></ul></div>
+				<div class="clear"></div>
 			</div>
 		</form>
 		<div class="clear"></div>
