@@ -23,7 +23,7 @@ extra short-codes and widgets
 */
 
 define( 'PLUGIN_ROOT_PATH', plugin_dir_path(__FILE__) );
-define( 'PLUGIN_ROOT_URL',plugins_url().'/dharmabooking/' );
+define( 'PLUGIN_ROOT_URL',plugins_url().'/dharma-booking/' );
 define( 'PLUGIN_TRANS_NAMESPACE','dharma' );
 define( 'DATABASE_PREFIX','dh_' );
 
