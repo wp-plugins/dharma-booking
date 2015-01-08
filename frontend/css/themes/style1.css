@@ -1,0 +1,33 @@
+/*colors and fonts*/
+#booking-calendar h3.errors { font-size:110%; color:red; }
+#booking-calendar h1.errors {text-align: center;background-color: black;color: red;padding: 5px;border-radius: 7px;}
+#booking-calendar h1.error{ color:red; background-color:black;padding:8px;}
+#booking-calendar small#timer {border: 1px solid rgb(16, 0, 136);padding: 5px;background: #C7FFC7;border-style: dotted;border-radius: 5px;}
+#booking-calendar .displaybox {	background: white;	border: 3px solid black}
+#booking-calendar .rentalSelectors.fullrental{background-color:gray; }
+#booking-calendar .selected{background-color:rgb(204, 255, 255); }
+#booking-calendar #booking-plugin-blackout {	background-color: rgba(22, 22, 131, 0.64);	}
+#booking-calendar #popoutCalendar {border: 1px solid grey;background-color: white;background: white;}
+#booking-calendar #errorList li {color:#CF0D0D;font-size:120%;font-weight: bold;border-radius: 5px;}
+#booking-calendar .errorField { background-color: #FF9F9F;border: 3px solid red;}
+#booking-calendar button { font-size:121%;  padding:15px;}
+#booking-calendar #sms-warningbox {background: #FCF1DD;border-radius: 3px;}
+#booking-calendar.fail {	color:OrangeRed; }
+#booking-calendar.success {color:green;}
+
+#rentalCalendar .active-day { color:black;}
+#rentalCalendar .inactive-day { color:gray;}
+#rentalCalendar td { border-color:gray;}
+#rentalCalendar tr.nohover:hover{ background-color:transparent}
+#booking-calendar .rentalSelector,#booking-calendar #reviewTitle ,#rentalCalendar .avaliable,#rentalCalendar tr:hover {background-color:rgb(132, 219, 226); color:black;}
+#rentalCalendar .full {background-color:rgb(87, 139, 3); color:gray;}
+#rentalCalendar .disabled {color:lightgray; background-color:rgb(176, 230, 89);}
+#feedback ul {padding: 0;display:inline}
+#feedback ul li{font-size:110%;list-style: none;display: inline;border-right: 1px solid black;padding: 5px;}
+#feedback ul li:first-child{border-left: 1px solid black;}
+#feedback ul li.fail{color:red; }
+#feedback ul li.success{color:green;}
+
+.debugclass {width:100%;border-bottom:1px solid; gray}
+
+#non-avaliable {background-color: rgb(250, 179, 114);font-weight: bold;}

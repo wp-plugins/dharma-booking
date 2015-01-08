@@ -1,12 +1,14 @@
 <?php
 
 function includeFrontendCSS(){//enquestyle
+	$basevars = get_option('Dharma_Vars');
 	$pluginUrl = PLUGIN_ROOT_URL;
-	?><link rel="stylesheet" type="text/css" href="<?=$pluginUrl?>frontend/css/style.css"><?php
-	?><style type="text/css"><?php 
-		$basevars = get_option('Dharma_Vars');
-		echo $basevars['css'];
-	?></style><?php
+	//	wp_enqueue_style( 'style-name', get_stylesheet_uri() );
+	wp_enqueue_style( 'style-core', $pluginUrl.'frontend/css/core.css' );
+	wp_enqueue_style( 'style-theme', $pluginUrl.'frontend/css/themes/style1.css' );
+	wp_enqueue_style( 'style-norm', $pluginUrl.'libs/normalize.css' );
+	wp_enqueue_style( 'style-boot', $pluginUrl.'libs/bootstrap/css/bootstrap.min.css' );
+	?><style type="text/css"><?=$basevars['css'];?></style><?php
 }
 /*
 makes up varilbles and string varibles as well as enquey scripts and style sheets needed for jquery 
