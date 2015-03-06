@@ -121,7 +121,7 @@ below is wordpess settings page and menues
 		foreach(array('calendar','reports','templates','rentals') as $menuItem){
 			add_submenu_page(PLUGIN_TRANS_NAMESPACE , __($menuItem,PLUGIN_TRANS_NAMESPACE), __( ucfirst($menuItem),PLUGIN_TRANS_NAMESPACE), 0,$menuItem, array('dharmaAdmin',$menuItem));
 		}
-		add_submenu_page(PLUGIN_TRANS_NAMESPACE , __('Settings',PLUGIN_TRANS_NAMESPACE), __('Settings',PLUGIN_TRANS_NAMESPACE), 'manage_options','settings_api_sample', array('dharmaAdmin','settingsPage'));
+		add_submenu_page(PLUGIN_TRANS_NAMESPACE , __('Settings',PLUGIN_TRANS_NAMESPACE), __('Settings',PLUGIN_TRANS_NAMESPACE), 'manage_options','settings_dh', array('dharmaAdmin','settingsPage'));
 		add_options_page(PLUGIN_TRANS_NAMESPACE, __('Settings',PLUGIN_TRANS_NAMESPACE), __('Settings',PLUGIN_TRANS_NAMESPACE), 'settings_api_sample', array('dharmaAdmin','settings'));
 	}
 	function rentals() 	{ require_once('rentals.php'); }
