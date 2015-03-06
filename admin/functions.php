@@ -1,6 +1,6 @@
 <?php 
 /* be nice to get rid of this file*/
-function getRoomtypes ($forSelect = false) {
+function getRoomtypesDH ($forSelect = false) {
 		global $wpdb;
 		$roomtypes = array();
 		$res = mysql_query('SELECT id, name, minimum, capacity, price, discription FROM '.$wpdb->prefix.DATABASE_PREFIX.'roomtypes ORDER by menuorder');

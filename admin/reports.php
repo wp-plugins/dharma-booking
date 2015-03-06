@@ -125,7 +125,7 @@ class reports extends dharmaAdmin {
 		$bookings = array();
 		
 		$url = plugins_url();
-		$roomtypes = getRoomtypes(true);
+		$roomtypes = getRoomtypesDH(true);
 	$sql ='
 	SELECT
 		G.name,        G.email,        G.phone,

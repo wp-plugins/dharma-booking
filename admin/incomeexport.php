@@ -18,7 +18,7 @@ include_once ('Fusonic\SpreadsheetExport\Writers\OdsWriter');
 
 $bookings = array();
 
-$roomtypes = getRoomtypes();
+$roomtypes = getRoomtypesDH();
 $startDate = (!empty($_GET['startDate'])?$_GET['startDate']:date('Y-m-d'));
 $endDate = (!empty($_GET['endDate'])?$_GET['endDate']:date('Y-m-d',strtotime('+ 90days')));
 
