@@ -147,6 +147,7 @@ below is wordpess settings page and menues
 		add_settings_field('discountCard',  'Discount Card',        array('dharmaAdmin','discountCarddropdown'), 'D_Settings','B_ID');
 		add_settings_field('arivalTime',    'Arival Time Options',  array('dharmaAdmin','textarea'),'D_Settings', 'B_ID',					array('Dharma_Vars','arivalTime'));
 	
+
 		//calendar page settings 
   		add_settings_section('Ca_ID','Calender page options',array('dharmaAdmin','overview'),'D_Settings');
 		add_settings_field('CDays_Ahead',   'Defualt days in the future the calender starts on',array('dharmaAdmin','number'), 'D_Settings', 'Ca_ID', array('Dharma_Vars','cDaysAhead'));
@@ -188,6 +189,8 @@ below is wordpess settings page and menues
       add_settings_field('SMS_Phone',    'Admin Phone number', array('dharmaAdmin', 'text'), 'D_Settings', 'S_ID',  array('Dharma_Vars','smsPhone'));
       add_settings_field('SMS_Hours',    'Send sms to admin if booking is made with less than x hours till posible checkin.',                          array('dharmaAdmin', 'number'), 'D_Settings', 'S_ID',array('Dharma_Vars','smsHours'));
   
+		add_settings_section( 'm_ID',   'Other Settings',            array('dharmaAdmin', 'overview'), 'D_Settings');
+		add_settings_field('bstrap',  'Use use bootstrap',array('dharmaAdmin', 'checkbox'), 'D_Settings', 'm_ID',   array('Dharma_Vars','bstrap'));
 	}
 	
 	/*the settings page display */

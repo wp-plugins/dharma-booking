@@ -6,8 +6,10 @@ function includeFrontendCSS(){//enquestyle
 	//	wp_enqueue_style( 'style-name', get_stylesheet_uri() );
 	wp_enqueue_style( 'style-core', $pluginUrl.'frontend/css/core.css' );
 	wp_enqueue_style( 'style-theme', $pluginUrl.'frontend/css/themes/style1.css' );
-	//wp_enqueue_style( 'style-norm', $pluginUrl.'libs/normalize.css' );
-	//wp_enqueue_style( 'style-boot', $pluginUrl.'libs/bootstrap/css/bootstrap.min.css' );
+	if($basevars['bstrap'] == 'yes'){
+		wp_enqueue_style( 'style-norm', $pluginUrl.'libs/normalize.css' );
+		wp_enqueue_style( 'style-boot', $pluginUrl.'libs/bootstrap/css/bootstrap.min.css' );
+	}
 	?><style type="text/css"><?=$basevars['css'];?></style><?php
 }
 /*
