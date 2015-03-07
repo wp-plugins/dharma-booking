@@ -73,7 +73,6 @@ class matrixCalender {
 
 			<div id="formFields" class="hidden">
 				<?php echo makeInputs(userInfoDetails()); ?>
-				<div class="clear"></div>
 				<div id="callender-button-div">
 					<div class="floatright">
 						<button id="finalCalendarButton" type="button" > <big><?php _e('Book Now',PLUGIN_TRANS_NAMESPACE);?></big> </button>
@@ -193,7 +192,6 @@ class matrixCalender {
                <?php endif ?>
 				</tr>
 			</tbody></table>
-			<div class="clear"></div>
 		</div>
     <?php
     }

@@ -101,7 +101,7 @@ function userInfoDetails (){
 function makeInputs($input){
 	foreach ($input as $name => $data) {
 		$value = $_POST[$name];
-		echo '<div class="clear calendarInput">';
+		echo '<div class="calendarInput">';
 		echo '<label for="'.$name.'" class="'.$data['type'].' Type'.$data['type'].'"  >'.$data['label'].':'.($data['reg']?'*':'').'</label>';
 		switch($data['type']){ 
 			case'select':
