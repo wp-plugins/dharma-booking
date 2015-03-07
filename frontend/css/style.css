@@ -122,3 +122,7 @@ odds and ends
 .floatright{float:right;}
 .floatleft{float:left;}
 .hidden {display:none}
+
+
+/* hacks */
+.table {width: auto !important }
