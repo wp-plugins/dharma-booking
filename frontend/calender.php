@@ -45,7 +45,7 @@ class matrixCalender {
       
 		if($this->settings['bookingState'] == 'testing') echo $this->settings['TestingText'];
 		?>
-    <script>var discountCard = '<?=$this->settings['discountCard']?>';</script>		
+    <script type="text/javascript">var discountCard = '<?=$this->settings['discountCard']?>';</script>		
     <div id="booking-calendar">
 		<div id="booking-plugin-blackout" ></div>
 		<noscript><h1 class="errors"><?=__('This page requires javascript to use.',PLUGIN_TRANS_NAMESPACE)?></h1></noscript>
@@ -69,8 +69,23 @@ class matrixCalender {
 				<div id="calenderDiv"><?php $this->showCalendarMatrix();?></div>
 				<button type="button" id="continue-button" class="floatright hidden"><?php _e('Continue',PLUGIN_TRANS_NAMESPACE);?></button>
 			</div>	
+			
+
+			<div id="formFields" class="hidden">
+				<?php echo makeInputs(userInfoDetails()); ?>
+				<div class="clear"></div>
+				<div id="callender-button-div">
+					<div class="floatright">
+						<button id="finalCalendarButton" type="button" > <big><?php _e('Book Now',PLUGIN_TRANS_NAMESPACE);?></big> </button>
+						<br />
+						<small class="hideme"> <?php _e('Complete required(*) fields to unlock.',PLUGIN_TRANS_NAMESPACE);?> </small>
+					</div>
+					<div id="errorDiv" class="hidden"><strong><?=__('Please enter',PLUGIN_TRANS_NAMESPACE)?></strong><ul id="errorList"></ul></div>
+					<div class="clear"></div>
+				</div>
+			</div>
 		</form>
-	
+		<div class="clear"></div>
 		<?php if($this->gateway == 'none'):?>
 			<form id="paymentGatewayForm" action="<?=get_permalink($this->thanksPage)?>" method="post" class="hidden">
 				<input type="hidden" name="invoice" id="invoice" value="0" />
@@ -78,48 +93,27 @@ class matrixCalender {
 				<input   type="submit" value="Book Now" id="makeBookingButton"/>
 			</form>
 		<?php else: ?>
-			<div id="gateway-div" class="hidden displaybox " ><div id="gateway-inner">
-				<input type="hidden" name="invoice" id="invoiceID" value="0" />
-					<script>var takeDeposit = false;</script>
-					<script type="text/javascript">var takeDeposit = false; </script>
+			<div id="gateway-div" class="hiddendisplaybox " ><div id="gateway-inner">
 				<ul id="final-details-overview"></ul>
 				<div id="final-payment-overview"></div>
 				<small>
 					<?=sprintf(__('Prices are in %s &amp; per person per night',PLUGIN_TRANS_NAMESPACE),$this->settings['payment_currency_code']);?><br />
-					<br />
+					<?=sprintf(__('',PLUGIN_TRANS_NAMESPACE),$this->settings['payment_currency_code']);?><br />
 					<?php if($this->settings['discountCard'] != 'none'):?>
-						<?php _e('Discount prices available upon check in.',PLUGIN_TRANS_NAMESPACE)?><br />
+						<?php _e('Discount prices available upon check in.',PLUGIN_TRANS_NAMESPACE)?>
 					<?php endif ?>
-					<br />
-					<?=sprintf(__('Payments made though <a href="%s">%s</a>.',PLUGIN_TRANS_NAMESPACE),$this->settings['gatewayurl'],$this->settings['paymenttype']);?>			
 				</small>
 				<div class="clear"></div>
 				<?php  if($this->settings['takeFull']):?>
-					<button id="fullbutton" data-amount=""> <?php _e('Pay full amount',PLUGIN_TRANS_NAMESPACE)?> </button> 
+					<script type="text/javascript">var takeDeposit = false;</script>
+					<button> <?php _e('Pay full amount',PLUGIN_TRANS_NAMESPACE)?> </button> 
 				<?php endif ?>
 				<?php if($this->settings['takeDeposit']): ?>
-					<script>takeDeposit = true; var depositAmt = <?=$this->settings['payment_depoist']?></script>
-					<button data-amount=""id="depositbutton"> <?php printf( __( 'Pay %d%% deposit', PLUGIN_TRANS_NAMESPACE) ,$this->settings['payment_depoist']);?> </button>
+					<button> <?php printf( __( 'Pay %d%% deposit', PLUGIN_TRANS_NAMESPACE) ,$this->settings['payment_depoist']);?> </button>
+					<script type="text/javascript">var takeDeposit = '.$this->settings['payment_depoist'].'</script>
 				<?php endif ?>
 			</div></div>
 		<?php endif ?>
-
-		
-
-		<form id="formFields" class="hidden">
-			<?php echo makeInputs(userInfoDetails()); ?>
-			<div class="clear"></div>
-			<div id="callender-button-div">
-				<div class="floatright">
-					<button id="finalCalendarButton" type="button" > <big><?php _e('Book Now',PLUGIN_TRANS_NAMESPACE);?></big> </button>
-					<br />
-					<small class="hideme"> <?php _e('Complete required(*) fields to unlock.',PLUGIN_TRANS_NAMESPACE);?> </small>
-				</div>
-				<div id="errorDiv" class="hidden"><strong><?=__('Please enter',PLUGIN_TRANS_NAMESPACE)?></strong><ul id="errorList"></ul></div>
-				<div class="clear"></div>
-			</div>
-		</form>
-		<div class="clear"></div>
 		</div>
 	<?php
 	}
@@ -132,43 +126,54 @@ class matrixCalender {
 	function showCalendarMatrix(){	
 		$this->firstAvailble = $this->endStamp;
 		?>
-
-
 		<div id="bottomOfCalendar"></div>
-
-
-		<table class="table table-condensed"id="rentalCalendar" >
+		<table id="rentalCalendar" cellspacing="0" border="0">
 			<tr class="header nohover">
-				<td  colspan="2"></td>
-				<?php $n=1;	for($i=$this->startStamp; $i<$this->endStamp; $i += 86400):?><td class="<?php echo ($n <= $this->noNights ?'active':'inactive'); ?>-day"><?=date('j',$i)?></td><?php  $n++; endfor; ?>
+				<td   colspan="<?=($this->settings['discountCard'] != 'none'?'3':'2')?>"></td>
+				<?php $n=1; 	for($i=$this->startStamp; $i<$this->endStamp; $i += 86400):?>
+					<td class="<?php echo ($n <= $this->noNights ?'active':'inactive'); ?>-day"><?=date('j',$i)?></td>
+				<?php  $n++; endfor; ?>
 			</tr>
-
-			<?php  foreach ($this->rentals as $a) :?>
-			<tr title="<?=stripslashes( $a->discription)?>">
-				<th id="<?=$a->id?>" class="rentalRow"> <span id="<?=$a->id?>-name"><?=$a->name?> <?php if(isset($this->settings['showpopout'])):?><img src="<?=$this->url ?>img/info.png" /><?php endif ?></span></th>
-				<th>
-					<span id="price_<?=$a->id?>" data-price="<?=$a->price?>">$<?=$a->price?>  </span>
-					<?php if($this->settings['discountCard'] != 'none'):?> <span  id="discount_<?=$a->id?>" data-price="<?=$a->discount?>" >$<?=$a->discount?></span>*<?php endif?>
-				</th>		
-				<?=$this->getCells($a->minimum,$a->id )?>
-				<td><?=$this->getSelect($a->minimum,$a->id,$a->capacity)?></td>
+		<?php  
+		foreach ($this->rentals as $a) : 
+			$details = $this->createRentalRow($a->minimum,$a->id );
+		?>
+		<tr title="<?=stripslashes( $a->discription)?>">
+ 			<th id="<?=$a->id?>" class="rentalRow">
+				<span id="<?=$a->id?>-name"><?=$a->name?></span> 
+            <?php if(isset($this->settings['showpopout'])): ?><img src="<?=$this->url ?>img/info.png" /><?php endif ?>
+			</th>		
+			<th id="price_<?=$a->id?>" data-price="<?=$a->price?>"> <?php //$this->settings['CURRANCYSYMBOL'] ?>$<?=$a->price?>  </th>
+			<?php if($this->settings['discountCard'] != 'none'):?>
+				<th  id="discount_<?=$a->id?>" data-price="<?=$a->discount?>" >
+					<?php //$this->settings['CURRANCYSYMBOL'] ?>$<?=$a->discount?> 
+				</th>	
+			<?php endif?>
+			<?php echo $details[0]; ?>
+			
+			<td><?=$details[1];?></td>
 			</tr>
 			<?php endforeach ?>
-
 			<?php if($this->settings['discountCard'] != 'none'):?>
-				<tr class="nohover"> <td colspan="3">
-					<?=__('*prices with ',PLUGIN_TRANS_NAMESPACE)?><img src="<?=$this->url ?>img/discountcards/<?=$this->settings['discountCard']?>.png"  alt="<?=$this->settings['discountCard']?>" />
-				</td> </tr>
+				<tr class="nohover">
+					<td colspan="2"></td>
+					<td>
+						<img src="<?=$this->url ?>img/discountcards/<?=$this->settings['discountCard']?>.png" 
+									title="<?=__('prices with '.$this->settings['discountCard'],PLUGIN_TRANS_NAMESPACE)?>" 
+									alt="<?=$this->settings['discountCard']?>" />
+					</td>
+				</tr>
 			<?php endif?>
-			<?php if($this->rentalsThatAreAvaliable < 1) : ?>
-				<tr><td colspan="20"><div id="non-avaliable"><p><strong>
-					<?=sprintf(__('There is no avalibty for one or more of your dates, the earliest avalible date is %s the %s of %s.',PLUGIN_TRANS_NAMESPACE),date('l',$this->firstAvailble),date('jS',$this->firstAvailble), date('F',$this->firstAvailble));?>
-				</strong></p></div></td></tr>
-			<?php endif ?>
+		<?php if($this->rentalsThatAreAvaliable < 1) : ?>
+			<tr><td colspan="20"><div id="non-avaliable"><p><strong>
+				<?=sprintf(__('There is no avalibty for one or more of your dates, the earliest avalible date is %s the %s of %s.',PLUGIN_TRANS_NAMESPACE),date('l',$this->firstAvailble),date('jS',$this->firstAvailble), date('F',$this->firstAvailble));?>
+			</strong></p></div></td></tr>
+		<?php endif ?>
 		</table>
 
-
-		<?php if($this->settings['updateTimeoutOn'] == 'yes'):?><small class="floatright" id="timer"><?=sprintf(__('Updating in %s seconds.',PLUGIN_TRANS_NAMESPACE),'<b id="time"></b>');?></small><?php endif ?>
+			<?php if($this->settings['updateTimeoutOn'] == 'yes') : ?>
+				<small class="floatright" id="timer"><?=sprintf(__('Updating in %s seconds.',PLUGIN_TRANS_NAMESPACE),'<b id="time"></b>');?></small	>
+			<?php endif ?>
 
 		<div id="reviewDiv" class="hidden" >
 			<table id="reviewTable"><tbody>
@@ -192,59 +197,54 @@ class matrixCalender {
 		</div>
     <?php
     }
+    /*
+    create and return each callender rows avaliblity
+    */
+    function createRentalRow ($roomMin,$roomId){
+			$rentalAvaliblity= '';
+			$n = 0;
+			$t = 1;
+			$lowestAvail = 99999;
 
-	function getCells ($roomMin,$roomId){
-		$rentalAvaliblity= '';
-		$n = 0;
-		$t = 1;
-		$lowestAvail = 99999;
-
-		//this loop is done the wrong way round, it should make one call for all the data then proccess that 
-		for($i=$this->startStamp; $i<$this->endStamp; $i += 86400){
-			$data = $this->getRentalOptionsMatrix	($i,($i+86400),$roomId);
-			$id = $data['rentalId'];
-				if ($data['availab'] > 0  && $data['availab'] >= $roomMin ){
-					$class	=	'avaliable';
+			//this loop is done the wrong way round, it should make one call for all the data then proccess that 
+			for($i=$this->startStamp; $i<$this->endStamp; $i += 86400){
+            $data = $this->getRentalOptionsMatrix	($i,($i+86400),$roomId);
+				$id = $data['rentalId'];
+            if ($data['availab'] > 0  && $data['availab'] >= $roomMin ){
+               $class	=	'avaliable';
 					$avali	= $data['availab'];
-					if($i < $this->firstAvailble ) $this->firstAvailble = $i;
-				}else {
-					 $class	= 'full';
-					 $avali = 'x';
-				}
-				if($t > $this->noNights){
+					if($i < $this->firstAvailble )
+						$this->firstAvailble = $i;
+            }else {
+               $class	= 'full';
+               $avali = 'x';
+            }
+            if($t > $this->noNights){
 					$class = 'disabled'; 
-				}else{
-					if($data['availab'] < $lowestAvail && $lowestAvail != 0 ) 
-					$lowestAvail =  $data['availab'];
-				}
-				$rentalAvaliblity .= '<td id="rentalbox'.$data['rentalId'].$n.'" class="'.$class.'">'.$avali.'</td>';
-				$n++;
-			$t++;
-		} 
-
-		return $rentalAvaliblity;
-	}
-	function getSelect($roomMin,$roomId,$cap){
-		$lowestAvail = 99999;
-
-		//this loop is done the wrong way round, it should make one call for all the data then proccess that 
-		for($i=$this->startStamp; $i<$this->endStamp; $i += 86400){
-			$data = $this->getRentalOptionsMatrix	($i,($i+86400),$roomId);
-			if ($data['availab'] > 0  && $data['availab'] >= $roomMin ){
-				if($data['availab'] < $lowestAvail && $lowestAvail != 0 ) $lowestAvail =  $data['availab'];
+            }else{
+               if($data['availab'] < $lowestAvail && $lowestAvail != 0 ) 
+						$lowestAvail =  $data['availab'];
+            }
+            $rentalAvaliblity .= '<td id="rentalbox'.$data['rentalId'].$n.'" class="'.$class.'">'.$avali.'</td>';
+            $n++;
+				$t++;
 			} 
-		}
-		if($lowestAvail  >= $roomMin ) {
-			$options = '';
-			for ($k = $roomMin; $k <= $lowestAvail; $k++){
-				$options .='<option value="'.$k.'">'.$k.' '.( $k < 2 ? $this->vars['interface']['Guest'] : $this->vars['interface']['Guests']).'</option>';
+			if($lowestAvail >= $roomMin ) {
+            $options = '';
+            for ($k = $roomMin; $k <= $lowestAvail; $k++){
+                $options .='<option value="'.$k.'">'.$k.' '.( $k < 2 ? $this->vars['interface']['Guest'] : $this->vars['interface']['Guests']).'</option>';
+            }
+            $rentalSelect = '<select id="'.$id.'"  class="rentalSelector" name="rooms['.$id.']" >
+                            <option value="" selected="selected" >'.$this->vars['interface']['Select'].'</option>'.
+									 $options.
+									 '</select>';
+				
+				$this->rentalsThatAreAvaliable++;
+			} elseif($this->settings['showreserved']) {
+            $rentalSelect = '<select disabled="disabled" class="inputDis"><option>'.__('Reserved',PLUGIN_TRANS_NAMESPACE).'</option></select>';
 			}
-			$this->rentalsThatAreAvaliable++;
-			return '<select id="'.$id.'" class="rentalSelector" name="rooms['.$id.']" ><option value="" selected="selected" >'.$this->vars['interface']['Select'].'</option>'.$options.'</select>';
-		} elseif($this->settings['showreserved']) {
-			return '<select disabled="disabled" class="inputDis"><option>'.__('Reserved',PLUGIN_TRANS_NAMESPACE).'</option></select>';
-		}
-	}
+        return array($rentalAvaliblity, $rentalSelect);
+    }
 
 /*
 the sql call
