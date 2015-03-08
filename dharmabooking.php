@@ -3,7 +3,7 @@
 Plugin Name: Dharma booking
 Plugin URI: http://earthling.za.org/
 Description: A self contained accomadation booking system, with extras!
-Version: 2.36
+Version: 2.37
 Author: Jamie MacDonlad
 Author URI: http://earthling.za.org
 */
@@ -313,35 +313,6 @@ function dh_install_data() {
 		'data' => 'a message was sent to your phone [phone]'
 		));
 
-	//add_option("dharma_db_version", $dbversion);
 	update_option("dharma_db_version", $dh_db_version);
-		/*
-		dbDelta( $sql );
-
-		$my_plugin_table = $wpdb->prefix . DATABASE_PREFIX.'templates';
-		$sql = "INSERT INTO `$my_plugin_table` (`id`, `active`, `menuorder`, `name`, `minimum`, `capacity`, `price`, `discount`, `discription`) VALUES (1, 1, 1, 'upper bunglow', 2, 7, 30, 24, '<h2>Auskleiden weg brotkugeln getunchten dammerigen grundstuck flo gut ten</h2>\\r\\n\\r\\n<p>Ein gefallts hinunter stabelle vor schlafen neunzehn gekommen. Mi ward in he lang fiel ja habt ware mehr. Verschwand launischen und gab betrachtet angenommen erhaltenen bei. Wurden laufen solang hol ehe rothfu gut. Wo nachtun da gerbers flecken in er filzhut sagerei. Des herunter kindbett vor nirgends. Taghell wo gelernt ja schoner pa heimweh. Esse hand ans zart filz ist.</p>'),
-(2, 1, 1, 'lower bunglow', 3, 9, 20, 18, '<h2>Auskleiden weg brotkugeln getunchten dammerigen grundstuck flo gut ten</h2>\\r\\n\\r\\n<p>Ein gefallts hinunter stabelle vor schlafen neunzehn gekommen. Mi ward in he lang fiel ja habt ware mehr. Verschwand launischen und gab betrachtet angenommen erhaltenen bei. Wurden laufen solang hol ehe rothfu gut. Wo nachtun da gerbers flecken in er filzhut sagerei. Des herunter kindbett vor nirgends. Taghell wo gelernt ja schoner pa heimweh. Esse hand ans zart filz ist.</p>'),
-(3, 1, 4, 'farm house', 20, 99, 17, 15, '<h2>Auskleiden weg brotkugeln getunchten dammerigen grundstuck flo gut ten</h2>\\r\\n\\r\\n<p>Ein gefallts hinunter stabelle vor schlafen neunzehn gekommen. Mi ward in he lang fiel ja habt ware mehr. Verschwand launischen und gab betrachtet angenommen erhaltenen bei. Wurden laufen solang hol ehe rothfu gut. Wo nachtun da gerbers flecken in er filzhut sagerei. Des herunter kindbett vor nirgends. Taghell wo gelernt ja schoner pa heimweh. Esse hand ans zart filz ist.</p>'),
-(4, 1, 4, 'blue room', 3, 7, 29, 25, '<h2>Auskleiden weg brotkugeln getunchten dammerigen grundstuck flo gut ten</h2>\\r\\n\\r\\n<p>Ein gefallts hinunter stabelle vor schlafen neunzehn gekommen. Mi ward in he lang fiel ja habt ware mehr. Verschwand launischen und gab betrachtet angenommen erhaltenen bei. Wurden laufen solang hol ehe rothfu gut. Wo nachtun da gerbers flecken in er filzhut sagerei. Des herunter kindbett vor nirgends. Taghell wo gelernt ja schoner pa heimweh. Esse hand ans zart filz ist.</p>'),
-(5, 1, 3, 'red room', 2, 8, 29, 25, '<h2>Auskleiden weg brotkugeln getunchten dammerigen grundstuck flo gut ten</h2>\\r\\n\\r\\n<p>Ein gefallts hinunter stabelle vor schlafen neunzehn gekommen. Mi ward in he lang fiel ja habt ware mehr. Verschwand launischen und gab betrachtet angenommen erhaltenen bei. Wurden laufen solang hol ehe rothfu gut. Wo nachtun da gerbers flecken in er filzhut sagerei. Des herunter kindbett vor nirgends. Taghell wo gelernt ja schoner pa heimweh. Esse hand ans zart filz ist.</p>'),
-(6, 1, 3, 'penthouse', 1, 6, 50, 45, '<h2>Auskleiden weg brotkugeln getunchten dammerigen grundstuck flo gut ten</h2>\\r\\n\\r\\n<p>Ein gefallts hinunter stabelle vor schlafen neunzehn gekommen. Mi ward in he lang fiel ja habt ware mehr. Verschwand launischen und gab betrachtet angenommen erhaltenen bei. Wurden laufen solang hol ehe rothfu gut. Wo nachtun da gerbers flecken in er filzhut sagerei. Des herunter kindbett vor nirgends. Taghell wo gelernt ja schoner pa heimweh. Esse hand ans zart filz ist.</p>');";
-		dbDelta( $sql );
-*/
-
-/*
-why the fook does nither of these work ???!!!
-		$sql = 'INSERT INTO `'.$my_plugin_table.'` 
-(`option_name`, `autoload`, `option_value`) VALUES
-		("Dharma_Vars","yes",
-a:28:{s:12:"bookingState";s:7:"testing";s:10:"thanksPage";s:1:"5";s:10:"adminEmail";s:0:"";s:10:"replyEmail";s:0:"";s:8:"timezone";s:14:"Pacific/Wallis";s:12:"discountCard";s:3:"bbh";s:10:"arivalTime";s:17:"morning,afternoon";s:17:"calenderpopoutcss";s:48:"left: 174px;top: 20px;width: 385px;";s:10:"cDaysAhead";s:1:"1";s:7:"CnoNite";s:1:"8";s:7:"CnoDays";s:2:"15";s:7:"cssfile";s:9:"style.css";s:3:"css";s:0:"";s:11:"OfflineText";s:92:"<center><h1>---------------------------- Offline ----------------------------</h1> </center>";s:11:"TestingText";s:85:"<center><h1>---------------------------- Testing ----------------------</h1></center>";s:11:"paymenttype";s:4:"none";s:14:"paymentAccount";s:0:"";s:21:"payment_currency_code";s:3:"nzd";s:15:"payment_depoist";s:2:"14";s:11:"takeDeposit";s:3:"yes";s:8:"takeFull";s:3:"yes";s:8:"smsState";s:4:"down";s:7:"smstype";s:10:"clickatell";s:10:"smsAccount";s:5:"admin";s:11:"smsPassword";s:6:"password";s:6:"smsAPI";s:0:"";s:8:"smsPhone";s:0:"";s:8:"smsHours";s:0:"";}
-)';
-	dbDelta( $sql );//unsure if working or right way todo 
-
-		$wpdb->insert($wpdb->prefix . 'options',
-			array('option_name' => 'Dharma_Vars','autoload'=> 'yes', 'option_value' =>
-'a:33:{s:12:"bookingState";s:4:"live";s:10:"thanksPage";s:1:"5";s:10:"adminEmail";s:0:"";s:10:"replyEmail";s:0:"";s:8:"timezone";s:13:"Pacific/Nauru";s:14:"currancySymbol";s:3:"€";s:12:"discountCard";s:3:"bbh";s:10:"arivalTime";s:45:"11am,12am,1pm,2pm,3pm,4pm,5pm,6pm,8pm,9pm10pm";s:10:"cDaysAhead";s:1:"1";s:7:"CnoNite";s:1:"8";s:7:"CnoDays";s:2:"15";s:15:"updateTimeoutOn";s:3:"yes";s:10:"updateTime";s:1:"5";s:13:"updateWarning";s:2:"42";s:17:"calenderpopoutcss";s:48:"   left:174px;top:20px;width:385px;";s:6:"color1";s:0:"";s:7:"cssfile";s:9:"style.css";s:3:"css";s:0:"";s:11:"OfflineText";s:92:"<center><h1>---------------------------- Offline ----------------------------</h1> </center>";s:11:"TestingText";s:85:"<center><h1>---------------------------- Testing ----------------------</h1></center>";s:11:"paymenttype";s:4:"none";s:14:"paymentAccount";s:0:"";s:21:"payment_currency_code";s:3:"nzd";s:15:"payment_depoist";s:2:"14";s:11:"takeDeposit";s:3:"yes";s:8:"takeFull";s:3:"yes";s:8:"smsState";s:4:"down";s:7:"smstype";s:10:"clickatell";s:10:"smsAccount";s:5:"user";s:11:"smsPassword";s:6:"password";s:6:"smsAPI";s:0:"";s:8:"smsPhone";s:0:"";s:8:"smsHours";s:0:"";}'
-		));
-*/
-
 }
 ?>

@@ -19,6 +19,13 @@
 #rentalCalendar .inactive-day { color:gray;}
 #rentalCalendar td { border-color:gray;}
 #rentalCalendar tr.nohover:hover{ background-color:transparent}
+#rentalCalendar{ width: 70%; }
+
+#reviewTable{ width:70%; text-align: right;}
+
+#formFields{width:70% !important; }
+
+
 #booking-calendar .rentalSelector,#booking-calendar #reviewTitle ,#rentalCalendar .avaliable,#rentalCalendar tr:hover {background-color:rgb(132, 219, 226); color:black;}
 #rentalCalendar .full {background-color:rgb(87, 139, 3); color:gray;}
 #rentalCalendar .disabled {color:lightgray; background-color:rgb(176, 230, 89);}

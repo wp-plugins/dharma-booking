@@ -189,8 +189,10 @@ below is wordpess settings page and menues
       add_settings_field('SMS_Phone',    'Admin Phone number', array('dharmaAdmin', 'text'), 'D_Settings', 'S_ID',  array('Dharma_Vars','smsPhone'));
       add_settings_field('SMS_Hours',    'Send sms to admin if booking is made with less than x hours till posible checkin.',                          array('dharmaAdmin', 'number'), 'D_Settings', 'S_ID',array('Dharma_Vars','smsHours'));
   
+			/*
 		add_settings_section( 'm_ID',   'Other Settings',            array('dharmaAdmin', 'overview'), 'D_Settings');
 		add_settings_field('bstrap',  'Use use bootstrap',array('dharmaAdmin', 'checkbox'), 'D_Settings', 'm_ID',   array('Dharma_Vars','bstrap'));
+		*/
 	}
 	
 	/*the settings page display */
