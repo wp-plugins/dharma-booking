@@ -20,7 +20,7 @@
 #rentalCalendar td { border-color:gray;}
 #rentalCalendar tr.nohover:hover{ background-color:transparent}
 #rentalCalendar{ width: 70%; }
-#rentalCalendar th { text-align: right; }
+#rentalCalendar th { text-align: left; }
 
 #reviewTable{ width:70%; text-align: right;}
 
@@ -29,8 +29,10 @@
 #formFields input { width: 48%; margin: 4px 0px;}
 
 
-#booking-calendar .rentalSelector,#booking-calendar #reviewTitle ,#rentalCalendar .avaliable,#rentalCalendar tr:hover {background-color:rgb(132, 219, 226); color:black;}
-#rentalCalendar .full {background-color:rgb(87, 139, 3); color:gray;}
+#booking-calendar .rentalSelector,#booking-calendar #reviewTitle ,#rentalCalendar .avaliable,#rentalCalendar tr:hover {
+	background-color:lightgray; color:black;
+}
+#rentalCalendar .full {background-color:#ccffff; color:lightgray;}
 #rentalCalendar .disabled {color:lightgray; background-color:rgb(176, 230, 89);}
 #feedback ul {padding: 0;display:inline}
 #feedback ul li{font-size:110%;list-style: none;display: inline;border-right: 1px solid black;padding: 5px;}
