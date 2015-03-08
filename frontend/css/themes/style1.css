@@ -30,10 +30,10 @@
 
 
 #booking-calendar .rentalSelector,#booking-calendar #reviewTitle ,#rentalCalendar .avaliable,#rentalCalendar tr:hover {
-	background-color:lightgray; color:black;
+	background-color:lightblue; color:black;
 }
 #rentalCalendar .full {background-color:#ccffff; color:lightgray;}
-#rentalCalendar .disabled {color:lightgray; background-color:rgb(176, 230, 89);}
+#rentalCalendar .disabled {color:lightgray; background-color:rgb(187, 204, 204);}
 #feedback ul {padding: 0;display:inline}
 #feedback ul li{font-size:110%;list-style: none;display: inline;border-right: 1px solid black;padding: 5px;}
 #feedback ul li:first-child{border-left: 1px solid black;}
