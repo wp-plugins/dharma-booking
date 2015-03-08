@@ -25,8 +25,8 @@
 #reviewTable{ width:70%; text-align: right;}
 
 #formFields{width:70% !important; }
-#formFields label { font-weight: bold; padding: 13px; vertical-align: top;}
-#formFields input { width: 48%;}
+#formFields label { font-weight: bold; padding: 13px; vertical-align: middle;}
+#formFields input { width: 48%; margin: 4px 0px;}
 
 
 #booking-calendar .rentalSelector,#booking-calendar #reviewTitle ,#rentalCalendar .avaliable,#rentalCalendar tr:hover {background-color:rgb(132, 219, 226); color:black;}
